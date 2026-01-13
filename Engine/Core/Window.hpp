@@ -8,7 +8,7 @@ namespace Acroy {
     class Window
     {
     public:
-        Window(uint32_t width, uint32_t height, const char* title, bool fullscreen);
+        Window(const uint32_t width, const uint32_t height, const char* title, bool fullscreen);
         ~Window();
 
         void SetClearColor(glm::vec4 color);

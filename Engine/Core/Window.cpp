@@ -2,7 +2,7 @@
 #include <print>
 
 namespace Acroy {
-    Window::Window(uint32_t width, uint32_t height, const char* title, bool fullscreen)
+    Window::Window(const uint32_t width, const uint32_t height, const char* title, bool fullscreen)
     {
         if (!glfwInit())
         {
@@ -19,12 +19,7 @@ namespace Acroy {
         }
 
         glfwMakeContextCurrent(_window);
-
-        if (glewInit() != GLEW_OK)
-        {
-            std::println("Failed to initialize glfw");
-            return;
-        }
+        glewInit();
 
         glViewport(0, 0, width, height);
     }
