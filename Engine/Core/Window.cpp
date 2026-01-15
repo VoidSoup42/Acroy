@@ -2,7 +2,7 @@
 #include <print>
 
 namespace Acroy {
-    Window::Window(const uint32_t width, const uint32_t height, const char* title, bool fullscreen)
+    Window::Window(const uint32_t width, const uint32_t height, const char* title, const bool fullscreen, const bool vSync)
     {
         if (!glfwInit())
         {
@@ -18,6 +18,7 @@ namespace Acroy {
             return;
         }
 
+        glfwSwapInterval(vSync ? 1 : 0);
         glfwMakeContextCurrent(_window);
         glewInit();
 
@@ -28,10 +29,14 @@ namespace Acroy {
     {
         glfwTerminate();
     }
+
+    void Window::Clear()
+    {
+        glClear(GL_COLOR_BUFFER_BIT);
+    }
     
     void Window::Update()
     {
-        glClear(GL_COLOR_BUFFER_BIT);
         glfwSwapBuffers(_window);
         glfwPollEvents();
     }

@@ -2,13 +2,15 @@
 
 int main()
 {
-    Acroy::Window window(800, 600, "Acroy Sandbox", false);
+    Acroy::ApplicationProps appProps;
+    appProps.title = "Application";
+    appProps.windowWidth = 1280;
+    appProps.windowHeight = 720;
+    appProps.fullscreen = false;
+    appProps.vSync = true;
 
-    while (!window.ShouldClose())
-    {
-        window.SetClearColor({0.1f, 0.1f, 0.1f, 1.0f});
-        window.Update();
-    }
+    Acroy::Application app(appProps);
+    app.Run();
 
     return 0;
 }

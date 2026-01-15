@@ -1,6 +1,7 @@
 add_library(${PROJECT_NAME} SHARED)
 
 target_sources(${PROJECT_NAME} PRIVATE
+    Core/Application.cpp
     Core/Window.cpp
 )
 
