@@ -7,7 +7,7 @@ int main()
     appProps.windowWidth = 1280;
     appProps.windowHeight = 720;
     appProps.fullscreen = false;
-    appProps.vSync = true;
+    appProps.vSync = false;
 
     Acroy::Application app(appProps);
     app.Run();

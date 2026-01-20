@@ -10,6 +10,9 @@ namespace Acroy {
             return;
         }
 
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
+        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
         _window = glfwCreateWindow(width, height, title, fullscreen ? glfwGetPrimaryMonitor() : nullptr, nullptr);
 
         if (!_window)
@@ -22,7 +25,7 @@ namespace Acroy {
         glfwMakeContextCurrent(_window);
         glewInit();
 
-        glViewport(0, 0, width, height);
+        // glViewport(0, 0, width, height);
     }
 
     Window::~Window()
