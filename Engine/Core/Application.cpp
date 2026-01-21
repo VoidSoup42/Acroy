@@ -1,6 +1,7 @@
 #include "Application.hpp"
 
 #include "../Graphics/Renderer.hpp"
+#include "../Graphics/Texture.hpp"
 
 namespace Acroy {
     Application::Application(const ApplicationProps& props)
@@ -53,14 +54,22 @@ namespace Acroy {
 
         renderer.SubmitMesh(mesh);
 
+        Texture tex("/home/sam/Pictures/Wallpapers/mountain-scenery-digital-art-4k-wallpaper-uhdpaper.com-180@1@n.jpg");
+
+
+
         while (!_window->ShouldClose())
         {
             _window->SetClearColor({0.8, 0.05, 0.3, 1.0});
             _window->Clear();
 
+            glActiveTexture(GL_TEXTURE0 + 0);
+            glBindTexture(GL_TEXTURE_2D, tex.GetTexture());
+
+            shader.SetUniformInt("u_texture", 0);
+
             renderer.Draw(shader);
-
-
+            
             _window->Update();
         }
     }
