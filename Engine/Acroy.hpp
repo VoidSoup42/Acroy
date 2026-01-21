@@ -1,4 +1,5 @@
 #pragma once
 
 #include "Core/Application.hpp"
-// #include "Core/Window.hpp"
+#include "Graphics/Layer.hpp"
+#include "Graphics/Renderer.hpp"
