@@ -1,13 +1,15 @@
 #pragma once
 
+#include <cstdint>
 #include <glm/glm.hpp>
 #include <vector>
-#include <list>
 #include <memory>
 
 #include "Shader.hpp"
+#include "Texture.hpp"
 
 namespace Acroy {
+
 	struct Vertex
 	{
 		glm::vec3 position;
@@ -18,30 +20,41 @@ namespace Acroy {
 	class Mesh
 	{
 	public:
-		Mesh(std::vector<Vertex>& vertices, std::vector<uint32_t>& indices);
+		Mesh(const std::vector<Vertex>& vertices,
+		     const std::vector<uint32_t>& indices);
 		~Mesh();
 
-		inline uint32_t& GetVertexArray()  { return _vertexArray;  }
-		inline uint32_t& GetIndicesCount() { return _indicesCount; }
+		uint32_t GetVertexArray()  const { return _vertexArray;  }
+		uint32_t GetIndicesCount() const { return _indicesCount; }
 
 	private:
-		uint32_t _vertexArray;
-		uint32_t _vertexBuffer;
-		uint32_t _indexBuffer;
-		uint32_t _indicesCount;
+		uint32_t _vertexArray  = 0;
+		uint32_t _vertexBuffer = 0;
+		uint32_t _indexBuffer  = 0;
+		uint32_t _indicesCount = 0;
+	};
+
+	struct Material
+	{
+		std::unique_ptr<Shader>  shader;
+		std::unique_ptr<Texture> diffuseTexture;
+		glm::vec3 diffuseColor{1.0f};
+	};
+
+	struct RenderObject
+	{
+		std::unique_ptr<Mesh>     mesh;
+		std::unique_ptr<Material> material;
 	};
 
 	class Renderer
 	{
 	public:
-		// Renderer();
-		// ~Renderer();
-
-		void SubmitMesh(Mesh& mesh);
-		void Draw(Shader& shader) const;
-
+		void SubmitObject(std::unique_ptr<RenderObject> object);
+		void Draw() const;
 
 	private:
-		std::list<std::unique_ptr<Mesh>> _meshes;
+		std::vector<std::unique_ptr<RenderObject>> _objects;
 	};
+
 }

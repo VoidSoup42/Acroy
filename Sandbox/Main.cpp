@@ -4,8 +4,8 @@ int main()
 {
     Acroy::ApplicationProps appProps;
     appProps.title = "Application";
-    appProps.windowWidth = 1280;
-    appProps.windowHeight = 720;
+    appProps.windowWidth = 1600;
+    appProps.windowHeight = 900;
     appProps.fullscreen = false;
     appProps.vSync = false;
 
