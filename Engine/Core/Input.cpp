@@ -14,6 +14,7 @@ namespace Acroy
         _window = window;
         glfwSetKeyCallback(window, KeyCallback);
         glfwSetCursorPosCallback(window, CursorPositionCallback);
+        glfwSetMouseButtonCallback(window, MouseButtonCallback);
     }
 
     bool Input::IsKeyPressed(uint32_t keycode)
@@ -46,6 +47,14 @@ namespace Acroy
     {
         _mouseX = xpos;
         _mouseY = ypos;
+    }
+
+    void Input::MouseButtonCallback(GLFWwindow* window, int button, int action, int mods)
+    {
+        (void)window;
+        (void)mods;
+        if (button >= 0 && button < MAX_BUTTONS)
+            _mouseButtons[button] = (action != GLFW_RELEASE);
     }
 
     void Input::SetCursorMode(bool enabled)
