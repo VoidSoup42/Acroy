@@ -1,6 +1,8 @@
 #pragma once
+
 #include <GLFW/glfw3.h>
 #include <cstdint>
+#include <glm/vec2.hpp>
 
 #define MAX_KEYS 1024
 #define MAX_BUTTONS 32
@@ -19,6 +21,8 @@ namespace Acroy
 
         static void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
         static void CursorPositionCallback(GLFWwindow* window, double xpos, double ypos);
+
+        static glm::vec2 GetWindowSize();
 
     private:
         static bool _keys[MAX_KEYS];

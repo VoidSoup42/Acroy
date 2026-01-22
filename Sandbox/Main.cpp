@@ -45,6 +45,8 @@ public:
 
     void OnUpdate(float deltaTime) override
     {
+        glm::vec2 windowSize = Acroy::Input::GetWindowSize();
+        camera.SetAspectRatio(windowSize.x / windowSize.y);
         renderer.Clear();
         renderer.SubmitObject(object);
         renderer.Draw(camera);

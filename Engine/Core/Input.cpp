@@ -61,4 +61,11 @@ namespace Acroy
             glfwSetInputMode(_window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
         }
     }
+
+    glm::vec2 Input::GetWindowSize()
+    {
+        int width, height;
+        glfwGetWindowSize(_window, &width, &height);
+        return glm::vec2(static_cast<float>(width), static_cast<float>(height));
+    }
 }

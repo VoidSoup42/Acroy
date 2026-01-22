@@ -19,4 +19,4 @@ include_directories(
     ${CMAKE_SOURCE_DIR}/Vendor/stb/
 )
 
-target_link_libraries(${PROJECT_NAME} PRIVATE OpenGL glfw GLEW)
+target_link_libraries(${PROJECT_NAME} PUBLIC OpenGL glfw GLEW)
