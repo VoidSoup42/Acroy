@@ -54,7 +54,7 @@ namespace Acroy {
         _objects.clear();
     }
 
-    void Renderer::Draw() const
+    void Renderer::Draw(const Camera& camera) const
 	{
         for (const auto& object : _objects)
 		{
@@ -62,6 +62,10 @@ namespace Acroy {
 
             auto& shader = object.material->shader;
             shader->Bind();
+
+            shader->SetUniformMat4("u_model", object.transform);
+            shader->SetUniformMat4("u_view", camera.GetViewMatrix());
+            shader->SetUniformMat4("u_projection", camera.GetProjectionMatrix());
 
             if (object.material->diffuseTexture)
 			{

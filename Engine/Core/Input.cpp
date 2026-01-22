@@ -13,7 +13,6 @@ namespace Acroy
     {
         _window = window;
         glfwSetKeyCallback(window, KeyCallback);
-        glfwSetMouseButtonCallback(window, MouseButtonCallback);
         glfwSetCursorPosCallback(window, CursorPositionCallback);
     }
 
@@ -41,19 +40,6 @@ namespace Acroy
     {
         if (key >= 0 && key < MAX_KEYS)
             _keys[key] = (action != GLFW_RELEASE);
-    }
-
-    void Input::MouseButtonCallback(GLFWwindow* window, int button, int action, int mods)
-    {
-        if (button >= 0 && button < MAX_BUTTONS)
-        {
-            _mouseButtons[button] = (action != GLFW_RELEASE);
-            
-            if (button == GLFW_MOUSE_BUTTON_RIGHT)
-            {
-                SetCursorMode(action != GLFW_RELEASE);
-            }
-        }
     }
 
     void Input::CursorPositionCallback(GLFWwindow* window, double xpos, double ypos)

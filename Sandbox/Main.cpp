@@ -4,8 +4,13 @@
 
 class GameLayer : public Acroy::Layer
 {
+private:
+    Acroy::Renderer renderer;
+    Acroy::RenderObject object;
+    Acroy::Camera camera;
+
 public:
-    virtual void OnAttach() override
+    void OnAttach() override
     {
         std::cout << "Game Layer Attatched" << std::endl;
 
@@ -34,27 +39,16 @@ public:
                 "/home/sam/Pictures/Wallpapers/Wallpapers/a_beach_with_waves_and_rocks.jpg");
 
         object.material->diffuseColor = {1.0f, 1.0f, 1.0f};
-    
+
+        camera.SetPosition({0.0f, 0.0f, 2.0f}); // Move back 2 units
     }
 
-    virtual void OnDetach() override
+    void OnUpdate(float deltaTime) override
     {
-        std::cout << "Game Layer Detached" << std::endl;
+        renderer.Clear();
+        renderer.SubmitObject(object);
+        renderer.Draw(camera);
     }
-
-    virtual void OnUpdate(float deltaTime) override
-    {
-        if (Acroy::Input::IsKeyPressed(GLFW_KEY_A))
-        {
-            renderer.Draw();
-            renderer.Clear();
-            renderer.SubmitObject(object);
-        }
-    }
-
-private:
-    Acroy::Renderer renderer;
-    Acroy::RenderObject object;
 };
 
 int main()

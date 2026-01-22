@@ -7,6 +7,7 @@
 
 #include "Shader.hpp"
 #include "Texture.hpp"
+#include "../Camera.hpp"
 
 namespace Acroy {
 
@@ -44,12 +45,13 @@ namespace Acroy {
     struct RenderObject {
         std::shared_ptr<Mesh>     mesh;
         std::shared_ptr<Material> material;
+        glm::mat4 transform{1.0};
     };
 
     class Renderer {
     public:
         void SubmitObject(const RenderObject& object);
-        void Draw() const;
+        void Draw(const Camera& camera) const;
         void Clear();
 
     private:

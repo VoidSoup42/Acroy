@@ -9,6 +9,8 @@ target_sources(${PROJECT_NAME} PRIVATE
     Graphics/Shader.cpp
     Graphics/Texture.cpp
 
+    Camera.cpp
+
     # stb
     ${CMAKE_SOURCE_DIR}/Vendor/stb/stb_image_loader.cpp
 )
