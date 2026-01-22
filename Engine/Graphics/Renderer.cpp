@@ -18,14 +18,21 @@ namespace Acroy {
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(uint32_t), indices.data(), GL_STATIC_DRAW);
 
+        // Position
         glEnableVertexAttribArray(0);
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, position));
 
+        // Normal
         glEnableVertexAttribArray(1);
         glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, normal));
 
+        // Color
         glEnableVertexAttribArray(2);
-        glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, textureCoordinate));
+        glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, color));
+
+        // textureCoordinate
+        glEnableVertexAttribArray(3);
+        glVertexAttribPointer(3, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, textureCoordinate));
 
         glBindVertexArray(0);
     }
@@ -53,13 +60,14 @@ namespace Acroy {
 		{
             if (!object.mesh || !object.material) continue;
 
-            object.material->shader->Bind();
+            auto& shader = object.material->shader;
+            shader->Bind();
 
             if (object.material->diffuseTexture)
 			{
                 glActiveTexture(GL_TEXTURE0);
                 glBindTexture(GL_TEXTURE_2D, object.material->diffuseTexture->GetID());
-                object.material->shader->SetUniformInt("u_texture", 0);
+                shader->SetUniformInt("u_texture", 0);
             }
 
             glBindVertexArray(object.mesh->GetVertexArray());
