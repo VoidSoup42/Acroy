@@ -10,51 +10,48 @@
 
 namespace Acroy {
 
-	struct Vertex
-	{
-		glm::vec3 position;
-		glm::vec3 normal;
-		glm::vec2 textureCoordinate;
-	};
+    struct Vertex {
+        glm::vec3 position;
+        glm::vec3 normal;
+        glm::vec2 textureCoordinate;
+    };
 
-	class Mesh
-	{
-	public:
-		Mesh(const std::vector<Vertex>& vertices,
-		     const std::vector<uint32_t>& indices);
-		~Mesh();
+    class Mesh {
+    public:
+        Mesh(const std::vector<Vertex>& vertices, const std::vector<uint32_t>& indices);
+        ~Mesh();
 
-		uint32_t GetVertexArray()  const { return _vertexArray;  }
-		uint32_t GetIndicesCount() const { return _indicesCount; }
+        Mesh(const Mesh&) = delete;
+        Mesh& operator=(const Mesh&) = delete;
 
-	private:
-		uint32_t _vertexArray  = 0;
-		uint32_t _vertexBuffer = 0;
-		uint32_t _indexBuffer  = 0;
-		uint32_t _indicesCount = 0;
-	};
+        uint32_t GetVertexArray()  const { return _vertexArray;  }
+        uint32_t GetIndicesCount() const { return _indicesCount; }
 
-	struct Material
-	{
-		std::unique_ptr<Shader>  shader;
-		std::unique_ptr<Texture> diffuseTexture;
-		glm::vec3 diffuseColor{1.0f};
-	};
+    private:
+        uint32_t _vertexArray  = 0;
+        uint32_t _vertexBuffer = 0;
+        uint32_t _indexBuffer  = 0;
+        uint32_t _indicesCount = 0;
+    };
 
-	struct RenderObject
-	{
-		std::unique_ptr<Mesh>     mesh;
-		std::unique_ptr<Material> material;
-	};
+    struct Material {
+        std::shared_ptr<Shader>  shader;
+        std::shared_ptr<Texture> diffuseTexture;
+        glm::vec3 diffuseColor{1.0f};
+    };
 
-	class Renderer
-	{
-	public:
-		void SubmitObject(std::unique_ptr<RenderObject> object);
-		void Draw() const;
+    struct RenderObject {
+        std::shared_ptr<Mesh>     mesh;
+        std::shared_ptr<Material> material;
+    };
 
-	private:
-		std::vector<std::unique_ptr<RenderObject>> _objects;
-	};
+    class Renderer {
+    public:
+        void SubmitObject(const RenderObject& object);
+        void Draw() const;
+        void Clear();
 
+    private:
+        std::vector<RenderObject> _objects;
+    };
 }
