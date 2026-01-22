@@ -44,9 +44,12 @@ public:
 
     virtual void OnUpdate(float deltaTime) override
     {
-        renderer.Clear();
-        renderer.SubmitObject(object);
-        renderer.Draw();
+        if (Acroy::Input::IsKeyPressed(GLFW_KEY_A))
+        {
+            renderer.Draw();
+            renderer.Clear();
+            renderer.SubmitObject(object);
+        }
     }
 
 private:

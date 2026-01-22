@@ -1,4 +1,5 @@
 #include "Window.hpp"
+#include "Input.hpp"
 #include <print>
 
 namespace Acroy {
@@ -23,6 +24,8 @@ namespace Acroy {
 
         glfwSwapInterval(vSync ? 1 : 0);
         glfwMakeContextCurrent(_window);
+        Input::Init(_window);
+
         glewInit();
 
         glfwSetWindowSizeCallback(_window, [](GLFWwindow* window, int width, int height){
