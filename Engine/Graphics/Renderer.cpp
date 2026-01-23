@@ -1,5 +1,6 @@
 #include "Renderer.hpp"
 #include <GL/glew.h>
+#include <glm/gtc/matrix_transform.hpp>
 
 namespace Acroy {
 
@@ -52,6 +53,23 @@ namespace Acroy {
     void Renderer::Clear()
 	{
         _objects.clear();
+    }
+
+    void RenderObject::Translate(const glm::vec3& pos)
+    {
+        transform = glm::translate(transform, pos);
+    }
+
+    void RenderObject::Rotate(const glm::vec3& eulerAngles)
+    {
+        transform = glm::rotate(transform, eulerAngles.x, glm::vec3(1, 0, 0));
+        transform = glm::rotate(transform, eulerAngles.y, glm::vec3(0, 1, 0));
+        transform = glm::rotate(transform, eulerAngles.z, glm::vec3(0, 0, 1));
+    }
+
+    void RenderObject::Scale(const glm::vec3& scale)
+    {
+        transform = glm::scale(transform, scale);
     }
 
     void Renderer::Draw(const Camera& camera) const

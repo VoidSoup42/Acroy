@@ -10,6 +10,7 @@ target_sources(${PROJECT_NAME} PRIVATE
     Graphics/Texture.cpp
 
     Camera.cpp
+    MeshFactory.cpp
 
     # stb
     ${CMAKE_SOURCE_DIR}/Vendor/stb/stb_image_loader.cpp

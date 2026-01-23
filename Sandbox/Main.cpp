@@ -1,6 +1,7 @@
 #include <Acroy.hpp>
 #include <iostream>
 #include <vector>
+#include <glm/gtc/matrix_transform.hpp>
 
 class GameLayer : public Acroy::Layer
 {
@@ -14,20 +15,7 @@ public:
     {
         std::cout << "Game Layer Attatched" << std::endl;
 
-        std::vector<Acroy::Vertex> vertices = {
-            //     Position               Normal                 Color             TexCoord
-            {{ -0.5f, -0.5f, 0.0f}, { 0.0f, 0.0f, 1.0f }, { 1.0f, 0.0f, 0.0f }, { 0.0f, 0.0f } },
-            {{  0.5f, -0.5f, 0.0f}, { 0.0f, 0.0f, 1.0f }, { 0.0f, 1.0f, 0.0f }, { 1.0f, 0.0f } },
-            {{  0.5f,  0.5f, 0.0f}, { 0.0f, 0.0f, 1.0f }, { 0.0f, 1.0f, 1.0f }, { 1.0f, 1.0f } },
-            {{ -0.5f,  0.5f, 0.0f}, { 0.0f, 0.0f, 1.0f }, { 1.0f, 1.0f, 1.0f }, { 0.0f, 1.0f } }
-        };
-
-        std::vector<uint32_t> indices = {
-            0, 1, 2,
-            2, 3, 0
-        };
-
-        object.mesh = std::make_shared<Acroy::Mesh>(vertices, indices);
+        object.mesh = Acroy::MeshFactory::CreateCube(glm::vec3(1.0));
         object.material = std::make_shared<Acroy::Material>();
 
         object.material->shader = std::make_shared<Acroy::Shader>(
@@ -41,12 +29,16 @@ public:
         object.material->diffuseColor = {1.0f, 1.0f, 1.0f};
 
         camera.SetPosition({0.0f, 0.0f, 2.0f}); // Move back 2 units
+        camera.SetFOV(90.0);
     }
 
     void OnUpdate(float deltaTime) override
     {
         glm::vec2 windowSize = Acroy::Input::GetWindowSize();
         camera.SetAspectRatio(windowSize.x / windowSize.y);
+        
+        object.Rotate({0.0, deltaTime / 3, 0.0});
+        
         renderer.Clear();
         renderer.SubmitObject(object);
         renderer.Draw(camera);

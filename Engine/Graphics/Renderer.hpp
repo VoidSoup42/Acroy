@@ -42,10 +42,15 @@ namespace Acroy {
         glm::vec3 diffuseColor{1.0f};
     };
 
-    struct RenderObject {
+    class RenderObject {
+    public:
         std::shared_ptr<Mesh>     mesh;
         std::shared_ptr<Material> material;
         glm::mat4 transform{1.0};
+
+        void Translate(const glm::vec3& pos);
+        void Rotate(const glm::vec3& eulerAngles);
+        void Scale(const glm::vec3& scale);
     };
 
     class Renderer {
