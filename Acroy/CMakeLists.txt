@@ -1,9 +1,13 @@
 add_library(${PROJECT_NAME} SHARED)
 
 target_sources(${PROJECT_NAME} PRIVATE
-        Source/Core.hpp
-        Source/Application.hpp
-        Source/Application.cpp
+    source/Core.hpp
+    source/Application.hpp
+    source/Application.cpp
+    source/Log.hpp
+    source/Log.cpp
 )
 
-target_link_libraries(${PROJECT_NAME} PUBLIC OpenGL glfw GLEW)
+include_directories(
+    ${CMAKE_SOURCE_DIR}/Acroy/vendor/spdlog/include
+)
