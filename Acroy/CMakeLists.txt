@@ -1,11 +1,11 @@
 add_library(${PROJECT_NAME} SHARED)
 
 target_sources(${PROJECT_NAME} PRIVATE
-    source/Core.hpp
-    source/Application.hpp
-    source/Application.cpp
-    source/Log.hpp
-    source/Log.cpp
+    source/Core/Core.hpp
+    source/Core/Application.hpp
+    source/Core/Application.cpp
+    source/Core/Log.hpp
+    source/Core/Log.cpp
 )
 
 include_directories(

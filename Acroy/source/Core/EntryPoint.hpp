@@ -8,9 +8,6 @@ int main(int argc, char** argv)
 {
     Acroy::Log::Init();
 
-    ACROY_CORE_FATAL("Initialize Log!");
-    ACROY_INFO("Hello from client!");
-
     auto app = Acroy::CreateApplication();
     app->Run();
     delete app;

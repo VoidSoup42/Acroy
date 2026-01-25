@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Core.hpp"
-#include "Application.hpp"
+#include "Core/Core.hpp"
+#include "Core/Application.hpp"
 
-#include "EntryPoint.hpp"
-#include "Log.hpp"
+#include "Core/EntryPoint.hpp"
+#include "Core/Log.hpp"
