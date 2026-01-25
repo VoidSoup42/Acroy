@@ -9,5 +9,6 @@ target_sources(${PROJECT_NAME} PRIVATE
 )
 
 include_directories(
+    ${CMAKE_SOURCE_DIR}/Acroy/source
     ${CMAKE_SOURCE_DIR}/Acroy/vendor/spdlog/include
 )
