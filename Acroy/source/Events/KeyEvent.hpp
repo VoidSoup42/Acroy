@@ -18,22 +18,22 @@ namespace Acroy {
     class KeyPressedEvent final : public KeyEvent
     {
     public:
-        KeyPressedEvent(int keycode, uint32_t repeatCount)
-        : m_repeatCount(repeatCount)
+        KeyPressedEvent(int keycode, uint32_t keyRepeat)
+        : m_keyRepeat(keyRepeat)
         , KeyEvent(keycode) {}
 
-        inline uint32_t GetRepeatCount() const { return m_repeatCount; }        
+        inline uint32_t GetRepeatCount() const { return m_keyRepeat; }        
         inline std::string ToString() const override
         {
             std::stringstream ss;
-			ss << GetName() << ": " << m_keycode << " (" << m_repeatCount << " repeats";
+			ss << GetName() << ": " << m_keycode << " repeat = " << (m_keyRepeat ? "true" : "false");
 			return ss.str();
         }
         
         EVENT_CLASS_TYPE(KeyPressed)
 
     private:
-        uint32_t m_repeatCount;
+        uint32_t m_keyRepeat;
     };
 
     class KeyReleasedEvent final : public KeyEvent
