@@ -1,5 +1,8 @@
 #pragma once
 
+#include <memory>
+#include "Core/Window.hpp"
+
 namespace Acroy {
     class Application
     {
@@ -8,6 +11,10 @@ namespace Acroy {
         virtual ~Application();
 
         void Run();
+
+    private:
+        std::unique_ptr<Window> m_window;
+        bool m_running = true;
     };
 
     Application* CreateApplication(); // Defined in Client

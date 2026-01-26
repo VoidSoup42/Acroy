@@ -6,6 +6,7 @@ namespace Acroy
 {
     Application::Application()
     {
+        m_window = std::unique_ptr<Window>(Window::Create());
     }
 
     Application::~Application()
@@ -14,8 +15,11 @@ namespace Acroy
 
     void Application::Run()
     {
-        WindowResizeEvent e(1280, 720);
-        ACROY_CORE_INFO(e.ToString());
-        while (true);
+        while (m_running)
+        {
+            // glClearColor(0.75f, 0.1f, 0.35f, 1.0f);
+            // glClear(GL_COLOR_BUFFER_BIT);
+            m_window->Update();
+        }
     }
 }

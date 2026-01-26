@@ -1,11 +1,15 @@
-add_library(${PROJECT_NAME} SHARED)
+add_library(${PROJECT_NAME} SHARED
+    source/AcroyPCH.hpp
 
-target_sources(${PROJECT_NAME} PRIVATE
     source/Core/Core.hpp
+    source/Core/Window.hpp
     source/Core/Application.hpp
     source/Core/Application.cpp
     source/Core/Log.hpp
     source/Core/Log.cpp
+
+    source/Platform/Linux/LinuxWindow.hpp
+    source/Platform/Linux/LinuxWindow.cpp
 )
 
 include_directories(
