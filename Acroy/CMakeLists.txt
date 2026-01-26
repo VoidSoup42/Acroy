@@ -12,3 +12,8 @@ include_directories(
     ${CMAKE_SOURCE_DIR}/Acroy/source
     ${CMAKE_SOURCE_DIR}/Acroy/vendor/spdlog/include
 )
+
+add_subdirectory(vendor/glfw)
+
+target_link_libraries(${PROJECT_NAME} PUBLIC glfw OpenGL)
+target_precompile_headers(Acroy PRIVATE source/AcroyPCH.hpp)
