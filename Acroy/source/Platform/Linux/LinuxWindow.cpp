@@ -5,6 +5,8 @@
 #include "Events/KeyEvent.hpp"
 #include "Events/MouseEvent.hpp"
 
+#include <glad/glad.h>
+
 namespace Acroy {
 
     static bool s_glfwInitialized = false;
@@ -36,6 +38,10 @@ namespace Acroy {
 
         m_window = glfwCreateWindow(props.width, props.height, props.title.c_str(), nullptr, nullptr);
         glfwMakeContextCurrent(m_window);
+
+        int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
+        ACROY_CORE_ASSERT(status, "Failed to initialize Glad!");
+
         glfwSetWindowUserPointer(m_window, &m_windowData);
 
         glfwSetWindowSizeCallback(m_window, [](GLFWwindow* window, int width, int height)

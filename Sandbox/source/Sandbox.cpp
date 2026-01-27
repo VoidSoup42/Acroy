@@ -14,7 +14,7 @@ class GameLayer : public Acroy::Layer
 
     void OnUpdate() override
     {
-        ACROY_INFO("Game Updating");
+        // ACROY_INFO("Game Updating");
     }
 
     void OnEvent(Acroy::Event& event) override

@@ -2,6 +2,8 @@
 #include "Application.hpp"
 #include "Core/Log.hpp"
 
+#include <glad/glad.h>
+
 namespace Acroy
 {
     #define BIND_EVENT_FN(fn) std::bind(&fn, this, std::placeholders::_1)
@@ -28,6 +30,9 @@ namespace Acroy
     {
         while (m_running)
         {
+            glClearColor(.75f, 0.1f, 0.35f, 1.0f);
+            glClear(GL_COLOR_BUFFER_BIT);
+            
             for (Layer* layer : m_layerStack)
                 layer->OnUpdate();
 

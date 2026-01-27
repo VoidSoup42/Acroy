@@ -1,4 +1,4 @@
-add_library(${PROJECT_NAME} SHARED
+add_library(Acroy SHARED
     source/AcroyPCH.hpp
 
     source/Core/Core.hpp
@@ -18,9 +18,15 @@ add_library(${PROJECT_NAME} SHARED
 include_directories(
     ${CMAKE_SOURCE_DIR}/Acroy/source
     ${CMAKE_SOURCE_DIR}/Acroy/vendor/spdlog/include
+    ${CMAKE_SOURCE_DIR}/Acroy/vendor/glad/include
+)
+
+target_compile_definitions(Acroy PRIVATE
+    GLFW_INCLUDE_NONE
 )
 
 add_subdirectory(vendor/glfw)
+add_subdirectory(vendor/glad)
 
-target_link_libraries(${PROJECT_NAME} PUBLIC glfw OpenGL)
+target_link_libraries(Acroy PUBLIC glfw glad OpenGL)
 target_precompile_headers(Acroy PRIVATE source/AcroyPCH.hpp)
