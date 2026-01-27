@@ -45,8 +45,7 @@ namespace Acroy {
             return category & GetCategoryFlags();
         }
 
-    protected:
-        bool m_handled = false;
+        bool handled = false;
     };
 
     class EventDispatcher
@@ -62,7 +61,7 @@ namespace Acroy {
         {
             if (m_event.GetEventType() == T::GetStaticType())
             {
-                m_event.m_handled = func(*(T*)&m_event);
+                m_event.handled = func(*(T*)&m_event);
                 return true;
             }
             return false;

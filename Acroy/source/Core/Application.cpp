@@ -11,29 +11,37 @@ namespace Acroy
         m_window->SetEventCallback(BIND_EVENT_FN(Application::OnEvent));
     }
 
-    void Application::OnEvent(Event& e)
+    void Application::OnEvent(Event& event)
     {
-        EventDispatcher dispatcher(e);
-        dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(Application::OnWindowClose));
+        if (event.GetEventType() == EventType::WindowClose)
+            m_running = false;
 
-        ACROY_CORE_TRACE("{}", e.ToString());
-    }
-
-    bool Application::OnWindowClose(WindowCloseEvent& e)
-    {
-        m_running = false;
-        return true;
-    }
-
-    Application::~Application()
-    {
+		for (auto it = m_layerStack.begin(); it != m_layerStack.end(); ++it)
+		{
+			if (event.handled)
+				break;
+			(*it)->OnEvent(event);
+		}
     }
 
     void Application::Run()
     {
         while (m_running)
         {
+            for (Layer* layer : m_layerStack)
+                layer->OnUpdate();
+
             m_window->Update();
         }
+    }
+
+    void Application::PushLayer(Layer* layer)
+    {
+        m_layerStack.PushLayer(layer);
+    }
+
+    void Application::PushOverlay(Layer* layer)
+    {
+        m_layerStack.PushOverlay(layer);
     }
 }

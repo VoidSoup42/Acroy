@@ -7,6 +7,9 @@ add_library(${PROJECT_NAME} SHARED
     source/Core/Application.cpp
     source/Core/Log.hpp
     source/Core/Log.cpp
+    source/Core/Layer.hpp
+    source/Core/LayerStack.hpp
+    source/Core/LayerStack.cpp
 
     source/Platform/Linux/LinuxWindow.hpp
     source/Platform/Linux/LinuxWindow.cpp
