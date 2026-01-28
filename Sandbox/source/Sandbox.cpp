@@ -4,12 +4,12 @@ class GameLayer : public Acroy::Layer
 {
     void OnAttach() override
     {
-        ACROY_INFO("Game Attached");
+        // ACROY_INFO("Game Attached");
     }
 
     void OnDetach() override
     {
-        ACROY_INFO("Game detached");
+        // ACROY_INFO("Game detached");
     }
 
     void OnUpdate() override
@@ -19,7 +19,7 @@ class GameLayer : public Acroy::Layer
 
     void OnEvent(Acroy::Event& event) override
     {
-        ACROY_TRACE(event.ToString());
+        // ACROY_TRACE(event.ToString());
     }
 };
 
