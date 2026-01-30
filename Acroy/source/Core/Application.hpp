@@ -2,6 +2,8 @@
 
 #include <memory>
 #include <vector>
+#include <glm/fwd.hpp>
+#include <glm/ext/scalar_uint_sized.hpp>
 
 #include "Core/Layer.hpp"
 #include "Core/Window.hpp"
@@ -29,6 +31,10 @@ namespace Acroy {
         std::unique_ptr<Window> m_window;
         bool m_running = true;
         static Application* s_instance;
+
+    // Temp
+    private:
+        uint32_t m_vertexArray, m_vertexBuffer, m_indexBuffer;
     };
 
     Application* CreateApplication(); // Defined in Client

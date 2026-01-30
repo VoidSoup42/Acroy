@@ -2,6 +2,7 @@
 
 #include "Core/Window.hpp"
 #include "GLFW/glfw3.h"
+#include "Renderer/RenderingContext.hpp"
 
 namespace Acroy {
     class LinuxWindow final : public Window
@@ -33,6 +34,7 @@ namespace Acroy {
             EventCallbackFn eventCallback;
         };
 
+        RenderingContext* m_context;
         WindowData m_windowData;
     };
 }

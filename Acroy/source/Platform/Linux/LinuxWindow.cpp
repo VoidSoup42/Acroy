@@ -1,10 +1,9 @@
 #include "LinuxWindow.hpp"
 #include "Core/Log.hpp"
-#include "Core/Core.hpp"
 #include "Events/ApplicationEvent.hpp"
 #include "Events/KeyEvent.hpp"
 #include "Events/MouseEvent.hpp"
-
+#include "Platform/OpenGL/OpenGLContext.hpp"
 #include <glad/glad.h>
 
 namespace Acroy {
@@ -37,10 +36,8 @@ namespace Acroy {
         ACROY_CORE_INFO("Creating {} window: {} ({}, {})", glfwGetPlatform() == GLFW_PLATFORM_X11 ? "X11" : glfwGetPlatform() == GLFW_PLATFORM_WAYLAND ? "Wayland" : "Linux", props.title, props.width, props.height);
 
         m_window = glfwCreateWindow(props.width, props.height, props.title.c_str(), nullptr, nullptr);
-        glfwMakeContextCurrent(m_window);
-
-        int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
-        ACROY_CORE_ASSERT(status, "Failed to initialize Glad!");
+        m_context = new OpenGLContext(m_window);
+        m_context->Init();
 
         glfwSetWindowUserPointer(m_window, &m_windowData);
 

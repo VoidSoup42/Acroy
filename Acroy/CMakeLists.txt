@@ -1,5 +1,4 @@
 add_library(Acroy SHARED
-    source/Core/Core.hpp
     source/Core/Input.hpp
     source/Core/Window.hpp
     source/Core/Application.hpp
@@ -14,6 +13,11 @@ add_library(Acroy SHARED
     source/Platform/Linux/LinuxWindow.cpp
     source/Platform/Linux/LinuxInput.hpp
     source/Platform/Linux/LinuxInput.cpp
+
+    source/Renderer/RenderingContext.hpp
+
+    source/Platform/OpenGL/OpenGLContext.hpp
+    source/Platform/OpenGL/OpenGLContext.cpp
 )
 
 include_directories(

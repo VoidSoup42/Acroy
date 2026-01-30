@@ -32,3 +32,6 @@ namespace Acroy
 #define ACROY_WARN(...)       ::Acroy::Log::GetClientLogger()->warn(__VA_ARGS__)
 #define ACROY_ERROR(...)      ::Acroy::Log::GetClientLogger()->error(__VA_ARGS__)
 #define ACROY_FATAL(...)      ::Acroy::Log::GetClientLogger()->critical(__VA_ARGS__)
+
+#define ACROY_ASSERT(x, ...) { if(!(x)) { ACROY_CORE_ERROR("Assertion Failed: {0}", __VA_ARGS__); __builtin_trap(); } }
+#define ACROY_CORE_ASSERT(x, ...) { if(!(x)) { ACROY_CORE_ERROR("Assertion Failed: {0}", __VA_ARGS__); __builtin_trap(); } }
