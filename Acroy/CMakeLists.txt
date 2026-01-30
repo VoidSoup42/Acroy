@@ -15,6 +15,8 @@ add_library(Acroy SHARED
     source/Platform/Linux/LinuxInput.cpp
 
     source/Renderer/RenderingContext.hpp
+    source/Renderer/Shader.hpp
+    source/Renderer/Shader.cpp
 
     source/Platform/OpenGL/OpenGLContext.hpp
     source/Platform/OpenGL/OpenGLContext.cpp

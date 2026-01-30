@@ -17,6 +17,7 @@ namespace Acroy
         m_window = std::unique_ptr<Window>(Window::Create());
         m_window->SetEventCallback(BIND_EVENT_FN(Application::OnEvent));
 
+        // Temp
         glGenVertexArrays(1, &m_vertexArray);
         glBindVertexArray(m_vertexArray);
 
@@ -37,6 +38,36 @@ namespace Acroy
 
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
         glEnableVertexAttribArray(0);
+
+        std::string vertexSrc = R"(
+            #version 460 core
+
+            layout (location = 0) in vec3 a_position;
+
+            out vec3 position;
+
+            void main()
+            {
+                gl_Position = vec4(a_position, 1.0
+                position = a_position;
+            }
+        
+        )";
+
+        std::string fragmentSrc = R"(
+            #version 460 core
+
+            out vec4 color;
+            in vec3 position;
+
+            void main()
+            {
+                color = vec4(position * 0.5 + 0.5, 1);
+            }
+        
+        )";
+
+        m_shader = std::make_unique<Shader>(vertexSrc, fragmentSrc);
     }
 
     void Application::OnEvent(Event& event)
@@ -56,13 +87,11 @@ namespace Acroy
     {
         while (m_running)
         {
-            glm::vec2 mousepos = Input::GetMousePosition();
 
-            ACROY_CORE_TRACE("{}, {}", mousepos.x, mousepos.y);
-
-            glClearColor(.75f, 0.1f, 0.35f, 1.0f);
+            // glClearColor(.75f, 0.1f, 0.35f, 1.0f);
             glClear(GL_COLOR_BUFFER_BIT);
 
+            m_shader->Bind();
             glBindVertexArray(m_vertexArray);
             glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr);
             

@@ -9,6 +9,7 @@
 #include "Core/Window.hpp"
 #include "Core/LayerStack.hpp"
 #include "Events/ApplicationEvent.hpp"
+#include "Renderer/Shader.hpp"
 
 namespace Acroy {
     class Application
@@ -35,6 +36,7 @@ namespace Acroy {
     // Temp
     private:
         uint32_t m_vertexArray, m_vertexBuffer, m_indexBuffer;
+        std::unique_ptr<Shader> m_shader;
     };
 
     Application* CreateApplication(); // Defined in Client
