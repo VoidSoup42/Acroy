@@ -10,6 +10,7 @@
 #include "Core/LayerStack.hpp"
 #include "Events/ApplicationEvent.hpp"
 #include "Renderer/Shader.hpp"
+#include "Renderer/Buffer.hpp"
 
 namespace Acroy {
     class Application
@@ -35,8 +36,10 @@ namespace Acroy {
 
     // Temp
     private:
-        uint32_t m_vertexArray, m_vertexBuffer, m_indexBuffer;
+        uint32_t m_vertexArray;
         std::unique_ptr<Shader> m_shader;
+        std::unique_ptr<VertexBuffer> m_vertexBuffer;
+        std::unique_ptr<IndexBuffer> m_indexBuffer;
     };
 
     Application* CreateApplication(); // Defined in Client

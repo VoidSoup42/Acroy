@@ -2,6 +2,7 @@
 #include "Core/Application.hpp"
 #include "Core/Input.hpp"
 #include "Core/Log.hpp"
+#include "Renderer/Buffer.hpp"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -21,20 +22,18 @@ namespace Acroy
         glGenVertexArrays(1, &m_vertexArray);
         glBindVertexArray(m_vertexArray);
 
-        const float vertices[] =
+        float vertices[] =
         {
             -0.5, -0.5, 0.0,
              0.0,  0.5, 0.0,
              0.5, -0.5, 0.0
         };
-        const uint32_t indices[] = { 0, 1, 2 };
-        glGenBuffers(1, &m_vertexBuffer);
-        glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), &vertices, GL_STATIC_DRAW);
 
-        glGenBuffers(1, &m_indexBuffer);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_indexBuffer);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), &indices, GL_STATIC_DRAW);
+        uint32_t indices[] = { 0, 1, 2 };
+
+
+        m_vertexBuffer.reset(VertexBuffer::Create(vertices, sizeof(vertices)));
+        m_indexBuffer.reset(IndexBuffer::Create(indices, sizeof(indices)));
 
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
         glEnableVertexAttribArray(0);
@@ -93,6 +92,8 @@ namespace Acroy
 
             m_shader->Bind();
             glBindVertexArray(m_vertexArray);
+            m_vertexBuffer->Bind();
+            m_indexBuffer->Bind();
             glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr);
             
             for (Layer* layer : m_layerStack)

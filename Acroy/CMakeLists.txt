@@ -14,15 +14,21 @@ add_library(Acroy SHARED
     source/Platform/Linux/LinuxInput.hpp
     source/Platform/Linux/LinuxInput.cpp
 
+    source/Renderer/Renderer.hpp
+    source/Renderer/Renderer.cpp
     source/Renderer/RenderingContext.hpp
     source/Renderer/Shader.hpp
     source/Renderer/Shader.cpp
+    source/Renderer/Buffer.hpp
+    source/Renderer/Buffer.cpp
 
     source/Platform/OpenGL/OpenGLContext.hpp
     source/Platform/OpenGL/OpenGLContext.cpp
+    source/Platform/OpenGL/OpenGLBuffer.hpp
+    source/Platform/OpenGL/OpenGLBuffer.cpp
 )
 
-include_directories(
+target_include_directories(Acroy PUBLIC
     ${CMAKE_SOURCE_DIR}/Acroy/source
     ${CMAKE_SOURCE_DIR}/Acroy/vendor/spdlog/include
     ${CMAKE_SOURCE_DIR}/Acroy/vendor/glad/include
@@ -34,6 +40,9 @@ target_compile_definitions(Acroy PRIVATE
 
 add_subdirectory(vendor/glfw)
 add_subdirectory(vendor/glad)
+set(GLM_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+set(GLM_BUILD_LIBRARY OFF CACHE BOOL "" FORCE)
+add_subdirectory(vendor/glm)
 
-target_link_libraries(Acroy PUBLIC glfw glad OpenGL)
+target_link_libraries(Acroy PUBLIC glfw glad OpenGL glm::glm-header-only)
 target_precompile_headers(Acroy PRIVATE source/AcroyPCH.hpp)
