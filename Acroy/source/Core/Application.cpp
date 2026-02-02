@@ -2,7 +2,6 @@
 #include "Core/Application.hpp"
 #include "Core/Input.hpp"
 #include "Core/Log.hpp"
-#include "Renderer/Buffer.hpp"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -12,58 +11,102 @@ namespace Acroy
     Application* Application::s_instance = nullptr;
 
     #define BIND_EVENT_FN(fn) std::bind(&fn, this, std::placeholders::_1)
+
     Application::Application()
     {
         s_instance = this;
         m_window = std::unique_ptr<Window>(Window::Create());
         m_window->SetEventCallback(BIND_EVENT_FN(Application::OnEvent));
 
-        // Temp
-        glGenVertexArrays(1, &m_vertexArray);
-        glBindVertexArray(m_vertexArray);
 
-        float vertices[] =
+        // =========================
+        // Triangle
+        // =========================
+        m_vertexArray.reset(VertexArray::Create());
+
+        float triangleVertices[] =
         {
-            -0.5, -0.5, 0.0,
-             0.0,  0.5, 0.0,
-             0.5, -0.5, 0.0
+            // pos              // color
+            -0.5f, -0.5f, 0.0f,  1, 0, 0, 1,
+            0.0f,  0.5f, 0.0f,  0, 1, 0, 1,
+            0.5f, -0.5f, 0.0f,  0, 0, 1, 1
         };
 
-        uint32_t indices[] = { 0, 1, 2 };
+        uint32_t triangleIndices[] = { 0, 1, 2 };
 
+        std::shared_ptr<VertexBuffer> triangleVB;
+        triangleVB.reset(VertexBuffer::Create(triangleVertices, sizeof(triangleVertices)));
+        std::shared_ptr<IndexBuffer> triangleIB;
+        triangleIB.reset(IndexBuffer::Create(triangleIndices, 3));
 
-        m_vertexBuffer.reset(VertexBuffer::Create(vertices, sizeof(vertices)));
-        m_indexBuffer.reset(IndexBuffer::Create(indices, sizeof(indices)));
+        BufferLayout layout =
+        {
+            { "Position", ShaderDataType::Float3 },
+            { "Color",    ShaderDataType::Float4 }
+        };
 
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
-        glEnableVertexAttribArray(0);
+        triangleVB->SetLayout(layout);
+        m_vertexArray->AddVertexBuffer(triangleVB);
+        m_vertexArray->AddIndexBuffer(triangleIB);
 
+        // =========================
+        // Square
+        // =========================
+        m_SquareVA.reset(VertexArray::Create());
+
+        float squareVertices[] =
+        {
+            // pos              // color
+            -0.75f, -0.5f, 0.0f,  1, 0, 0, 1,
+            -0.25f, -0.5f, 0.0f,  0, 1, 0, 1,
+            -0.25f,  0.5f, 0.0f,  0, 0, 1, 1,
+            -0.75f,  0.5f, 0.0f,  1, 1, 0, 1
+        };
+
+        uint32_t squareIndices[] =
+        {
+            0, 1, 2,
+            2, 3, 0
+        };
+
+        std::shared_ptr<VertexBuffer> squareVB;
+        squareVB.reset(VertexBuffer::Create(squareVertices, sizeof(squareVertices)));
+
+        std::shared_ptr<IndexBuffer> squareIB;
+        squareIB.reset(IndexBuffer::Create(squareIndices, 6));
+
+        squareVB->SetLayout(layout);
+        m_SquareVA->AddVertexBuffer(squareVB);
+        m_SquareVA->AddIndexBuffer(squareIB);
+
+        auto test = squareVB->GetLayout();
+
+        // =========================
+        // Shader
+        // =========================
         std::string vertexSrc = R"(
             #version 460 core
-
             layout (location = 0) in vec3 a_position;
+            layout (location = 1) in vec4 a_color;
 
-            out vec3 position;
+            out vec4 v_color;
 
             void main()
             {
                 gl_Position = vec4(a_position, 1.0);
-                position = a_position;
+                v_color = a_color;
             }
-        
         )";
 
         std::string fragmentSrc = R"(
             #version 460 core
-
+            in vec4 v_color;
             out vec4 color;
-            in vec3 position;
 
             void main()
             {
-                color = vec4(position * 0.5 + 0.5, 1);
+                color = v_color;
             }
-        
         )";
 
         m_shader = std::make_unique<Shader>(vertexSrc, fragmentSrc);
@@ -91,10 +134,14 @@ namespace Acroy
             glClear(GL_COLOR_BUFFER_BIT);
 
             m_shader->Bind();
-            glBindVertexArray(m_vertexArray);
-            m_vertexBuffer->Bind();
-            m_indexBuffer->Bind();
+
+
+            m_SquareVA->Bind();
+            glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+
+            m_vertexArray->Bind();
             glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr);
+        
             
             for (Layer* layer : m_layerStack)
                 layer->OnUpdate();

@@ -21,11 +21,15 @@ add_library(Acroy SHARED
     source/Renderer/Shader.cpp
     source/Renderer/Buffer.hpp
     source/Renderer/Buffer.cpp
+    source/Renderer/VertexArray.hpp
+    source/Renderer/VertexArray.cpp
 
     source/Platform/OpenGL/OpenGLContext.hpp
     source/Platform/OpenGL/OpenGLContext.cpp
     source/Platform/OpenGL/OpenGLBuffer.hpp
     source/Platform/OpenGL/OpenGLBuffer.cpp
+    source/Platform/OpenGL/OpenGLVertexArray.hpp
+    source/Platform/OpenGL/OpenGLVertexArray.cpp
 )
 
 target_include_directories(Acroy PUBLIC

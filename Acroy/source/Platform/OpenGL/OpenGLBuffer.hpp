@@ -10,11 +10,15 @@ namespace Acroy
         OpenGLVertexBuffer(float* vertices, uint32_t size);
         virtual ~OpenGLVertexBuffer();
 
+        inline void SetLayout(BufferLayout& layout) override { m_layout = layout; }
+        inline const BufferLayout& GetLayout() const override { return m_layout; }
+
         void Bind() const override;
         void UnBind() const override;
         
     private:
         uint32_t m_rendererId;
+        BufferLayout m_layout;
     };
 
     class OpenGLIndexBuffer : public IndexBuffer

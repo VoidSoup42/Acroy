@@ -18,12 +18,12 @@ namespace Acroy
         return nullptr;
     }
 
-    IndexBuffer* IndexBuffer::Create(uint32_t* indices, uint32_t size)
+    IndexBuffer* IndexBuffer::Create(uint32_t* indices, uint32_t count)
     {
         switch (Renderer::GetCurrentAPI())
         {
             case RendererAPI::None:   ACROY_CORE_ASSERT(false, "RendererAPI::None currently not supported");
-            case RendererAPI::OpenGL: return new OpenGLIndexBuffer(indices, size);
+            case RendererAPI::OpenGL: return new OpenGLIndexBuffer(indices, count);
         }
 
         ACROY_CORE_ASSERT(false, "Unknown API");

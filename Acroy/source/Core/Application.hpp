@@ -11,6 +11,7 @@
 #include "Events/ApplicationEvent.hpp"
 #include "Renderer/Shader.hpp"
 #include "Renderer/Buffer.hpp"
+#include "Renderer/VertexArray.hpp"
 
 namespace Acroy {
     class Application
@@ -36,10 +37,12 @@ namespace Acroy {
 
     // Temp
     private:
-        uint32_t m_vertexArray;
+        std::unique_ptr<VertexArray> m_vertexArray;
         std::unique_ptr<Shader> m_shader;
-        std::unique_ptr<VertexBuffer> m_vertexBuffer;
-        std::unique_ptr<IndexBuffer> m_indexBuffer;
+        // std::shared_ptr<VertexBuffer> m_vertexBuffer;
+        // std::shared_ptr<IndexBuffer> m_indexBuffer;
+
+        std::unique_ptr<VertexArray> m_SquareVA;
     };
 
     Application* CreateApplication(); // Defined in Client
