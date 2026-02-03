@@ -14,6 +14,6 @@ namespace Acroy
         void UnBind() const;
 
     private:
-        uint32_t m_rendererId;
+        uint32_t m_rendererId = 0;
     };
 }

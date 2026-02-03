@@ -1,3 +1,4 @@
+#include "AcroyPCH.hpp"
 #include "Platform/OpenGL/OpenGLRendererAPI.hpp"
 #include <glad/glad.h>
 
