@@ -27,7 +27,7 @@ namespace Acroy
         OpenGLIndexBuffer(uint32_t* indices, uint32_t count);
         virtual ~OpenGLIndexBuffer();
 
-        inline uint32_t GetCount() const override { return m_indicesCount; }
+        inline uint32_t GetIndicesCount() const override { return m_indicesCount; }
 
         void Bind() const override;
         void UnBind() const override;

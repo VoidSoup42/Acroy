@@ -7,8 +7,8 @@ namespace Acroy
     {
         switch (Renderer::GetCurrentAPI())
         {
-            case RendererAPI::None:   ACROY_CORE_ASSERT(false, "RendererAPI::None currently not supported");
-            case RendererAPI::OpenGL: return new OpenGLVertexArray();
+            case RendererAPI::API::None:   ACROY_CORE_ASSERT(false, "RendererAPI::None currently not supported");
+            case RendererAPI::API::OpenGL: return new OpenGLVertexArray();
         }
 
         ACROY_CORE_ASSERT(false, "Invalid Renderer API");

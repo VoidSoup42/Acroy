@@ -1,18 +1,19 @@
 #pragma once
 
+#include <glm/glm.hpp>
+#include "Renderer/RendererAPI.hpp"
+#include "Renderer/RenderCommand.hpp"
+
 namespace Acroy
 {
-    enum class RendererAPI
-    {
-        None = 0, OpenGL = 1
-    };
-
     class Renderer
     {
     public:
-        inline static RendererAPI GetCurrentAPI() { return s_rendererAPI; }
-        
-    private:
-        static RendererAPI s_rendererAPI;
+        inline static RendererAPI::API GetCurrentAPI() { return RendererAPI::GetAPI();}
+
+        static void BeginScene();
+        static void EndScene();
+
+        static void Submit(const std::shared_ptr<VertexArray>& vertexArray);
     };
 }

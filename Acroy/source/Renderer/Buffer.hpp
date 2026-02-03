@@ -38,7 +38,7 @@ namespace Acroy
         const char* name;
         ShaderDataType type;
         size_t stride;
-        uint32_t offset;
+        size_t offset;
         bool normalized;
 
         uint32_t GetComponentCount() const
@@ -57,6 +57,8 @@ namespace Acroy
                 case ShaderDataType::Mat4:   return 4 * 4;
                 case ShaderDataType::Bool:   return 1;
             }
+
+            return 0;
         }
 
         VertexAttribute() {}
@@ -114,7 +116,7 @@ namespace Acroy
 
         static IndexBuffer* Create(uint32_t* indices, uint32_t count);
 
-        virtual uint32_t GetCount() const = 0;
+        virtual uint32_t GetIndicesCount() const = 0;
 
         virtual void Bind() const = 0;
         virtual void UnBind() const = 0;

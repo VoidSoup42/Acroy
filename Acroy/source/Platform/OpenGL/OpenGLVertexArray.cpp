@@ -38,13 +38,14 @@ namespace Acroy
     {
         ACROY_CORE_ASSERT(vertexBuffer->GetLayout().GetAttributes().size(), "Vertex Buffer has no layout");
 
+        m_vertexBuffers.push_back(vertexBuffer);
         glBindVertexArray(m_rendererId);
         vertexBuffer->Bind();
 
         uint32_t index = 0;
         for (const VertexAttribute& attrib : vertexBuffer->GetLayout())
         {
-            glVertexAttribPointer(index, attrib.GetComponentCount(), ShaderDataTypeToGLType(attrib.type), attrib.normalized, vertexBuffer->GetLayout().GetStride(), (const void*)attrib.offset);
+            glVertexAttribPointer(index, attrib.GetComponentCount(), ShaderDataTypeToGLType(attrib.type), attrib.normalized, vertexBuffer->GetLayout().GetStride(), reinterpret_cast<const void*>(attrib.offset));
             glEnableVertexAttribArray(index);
             index++;
         }
@@ -53,8 +54,9 @@ namespace Acroy
         glBindVertexArray(0);
     }
 
-    void OpenGLVertexArray::AddIndexBuffer(std::shared_ptr<IndexBuffer>& indexBuffer)
+    void OpenGLVertexArray::SetIndexBuffer(std::shared_ptr<IndexBuffer>& indexBuffer)
     {
+        m_indexBuffer = indexBuffer;
         glBindVertexArray(m_rendererId);
         indexBuffer->Bind();
         glBindVertexArray(0);

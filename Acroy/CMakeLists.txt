@@ -16,6 +16,10 @@ add_library(Acroy SHARED
 
     source/Renderer/Renderer.hpp
     source/Renderer/Renderer.cpp
+    source/Renderer/RenderCommand.hpp
+    source/Renderer/RenderCommand.cpp
+    source/Renderer/RendererAPI.hpp
+    source/Renderer/RendererAPI.cpp
     source/Renderer/RenderingContext.hpp
     source/Renderer/Shader.hpp
     source/Renderer/Shader.cpp
@@ -30,6 +34,8 @@ add_library(Acroy SHARED
     source/Platform/OpenGL/OpenGLBuffer.cpp
     source/Platform/OpenGL/OpenGLVertexArray.hpp
     source/Platform/OpenGL/OpenGLVertexArray.cpp
+    source/Platform/OpenGL/OpenGLRendererAPI.hpp
+    source/Platform/OpenGL/OpenGLRendererAPI.cpp
 )
 
 target_include_directories(Acroy PUBLIC

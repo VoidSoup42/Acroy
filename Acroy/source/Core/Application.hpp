@@ -37,12 +37,12 @@ namespace Acroy {
 
     // Temp
     private:
-        std::unique_ptr<VertexArray> m_vertexArray;
+        std::shared_ptr<VertexArray> m_vertexArray;
         std::unique_ptr<Shader> m_shader;
         // std::shared_ptr<VertexBuffer> m_vertexBuffer;
         // std::shared_ptr<IndexBuffer> m_indexBuffer;
 
-        std::unique_ptr<VertexArray> m_SquareVA;
+        std::shared_ptr<VertexArray> m_SquareVA;
     };
 
     Application* CreateApplication(); // Defined in Client

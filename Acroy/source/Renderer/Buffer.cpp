@@ -10,8 +10,8 @@ namespace Acroy
     {
         switch (Renderer::GetCurrentAPI())
         {
-            case RendererAPI::None:   ACROY_CORE_ASSERT(false, "RendererAPI::None currently not supported");
-            case RendererAPI::OpenGL: return new OpenGLVertexBuffer(vertices, size);
+            case RendererAPI::API::None:   ACROY_CORE_ASSERT(false, "RendererAPI::None currently not supported");
+            case RendererAPI::API::OpenGL: return new OpenGLVertexBuffer(vertices, size);
         }
 
         ACROY_CORE_ASSERT(false, "Unknown API");
@@ -22,8 +22,8 @@ namespace Acroy
     {
         switch (Renderer::GetCurrentAPI())
         {
-            case RendererAPI::None:   ACROY_CORE_ASSERT(false, "RendererAPI::None currently not supported");
-            case RendererAPI::OpenGL: return new OpenGLIndexBuffer(indices, count);
+            case RendererAPI::API::None:   ACROY_CORE_ASSERT(false, "RendererAPI::None currently not supported");
+            case RendererAPI::API::OpenGL: return new OpenGLIndexBuffer(indices, count);
         }
 
         ACROY_CORE_ASSERT(false, "Unknown API");

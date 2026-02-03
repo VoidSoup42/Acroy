@@ -3,8 +3,8 @@
 #include "Core/Input.hpp"
 #include "Core/Log.hpp"
 
-#include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include "Renderer/Renderer.hpp"
 
 namespace Acroy
 {
@@ -47,7 +47,7 @@ namespace Acroy
 
         triangleVB->SetLayout(layout);
         m_vertexArray->AddVertexBuffer(triangleVB);
-        m_vertexArray->AddIndexBuffer(triangleIB);
+        m_vertexArray->SetIndexBuffer(triangleIB);
 
         // =========================
         // Square
@@ -77,7 +77,7 @@ namespace Acroy
 
         squareVB->SetLayout(layout);
         m_SquareVA->AddVertexBuffer(squareVB);
-        m_SquareVA->AddIndexBuffer(squareIB);
+        m_SquareVA->SetIndexBuffer(squareIB);
 
         auto test = squareVB->GetLayout();
 
@@ -130,18 +130,24 @@ namespace Acroy
         while (m_running)
         {
 
-            // glClearColor(.75f, 0.1f, 0.35f, 1.0f);
-            glClear(GL_COLOR_BUFFER_BIT);
+            RenderCommand::SetClearColor({(float)35/255, (float)35/255, (float)35/255, 1.0f});
+            RenderCommand::Clear();
 
             m_shader->Bind();
 
-
-            m_SquareVA->Bind();
-            glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
-
             m_vertexArray->Bind();
-            glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr);
-        
+            RenderCommand::DrawIndexed(m_vertexArray);
+            m_SquareVA->Bind();
+            RenderCommand::DrawIndexed(m_SquareVA);
+            
+            // Renderer::BeginScene();
+
+            // m_shader->Bind();
+
+            // Renderer::Submit(m_vertexArray, 3);
+            // Renderer::Submit(m_SquareVA, 6);
+
+            // Renderer::EndScene();
             
             for (Layer* layer : m_layerStack)
                 layer->OnUpdate();
