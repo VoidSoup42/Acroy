@@ -62,7 +62,7 @@ namespace Acroy
         }
 
         VertexAttribute() {}
-        VertexAttribute(const char* name, ShaderDataType type, bool normalized = true)
+        VertexAttribute(const char* name, ShaderDataType type, bool normalized = false)
         : name(name), type(type), stride(ShaderDataTypeSize(type)), offset(0), normalized(normalized) {}
     };
     

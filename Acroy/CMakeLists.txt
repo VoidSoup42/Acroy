@@ -8,11 +8,15 @@ add_library(Acroy SHARED
     source/Core/Layer.hpp
     source/Core/LayerStack.hpp
     source/Core/LayerStack.cpp
+    source/Core/Timestep.hpp
 
     source/Platform/Linux/LinuxWindow.hpp
     source/Platform/Linux/LinuxWindow.cpp
     source/Platform/Linux/LinuxInput.hpp
     source/Platform/Linux/LinuxInput.cpp
+
+    source/Renderer/Camera.hpp
+    source/Renderer/Camera.cpp
 
     source/Renderer/Renderer.hpp
     source/Renderer/Renderer.cpp

@@ -26,4 +26,23 @@ namespace Acroy {
         glfwGetCursorPos(window, &x, &y);
         return { static_cast<float>(x), static_cast<float>(y) };
     }
+
+    void LinuxInput::SetMouseModeImpl(MouseMode mode)
+    {
+        if (mode == m_mouseMode)
+            return;
+
+        int glfwMode = GLFW_CURSOR_NORMAL;
+
+        switch (mode)
+        {
+            case MouseMode::Normal:    glfwMode = GLFW_CURSOR_NORMAL;   break;
+            case MouseMode::Hidden:    glfwMode = GLFW_CURSOR_HIDDEN;   break;
+            case MouseMode::Disabled:  glfwMode = GLFW_CURSOR_DISABLED; break;
+        }
+
+        GLFWwindow* window = static_cast<GLFWwindow*>(Application::GetApplicationInstance().GetWindow().GetNativeWindow());
+        glfwSetInputMode(window, GLFW_CURSOR, glfwMode);
+        m_mouseMode = mode;
+    }
 }

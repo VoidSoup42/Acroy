@@ -1,11 +1,14 @@
 #include "Renderer/Renderer.hpp"
-#include "Renderer/RenderCommand.hpp"
 
 namespace Acroy
 {
-    void Renderer::BeginScene()
-    {
+    Camera Renderer::s_camera;
 
+    int nothing = 0;
+
+    void Renderer::BeginScene(const Camera& camera)
+    {
+        s_camera = camera;
     }
     
     void Renderer::EndScene()
@@ -13,8 +16,11 @@ namespace Acroy
 
     }
 
-    void Renderer::Submit(const std::shared_ptr<VertexArray>& vertexArray)
-    {
+    void Renderer::Submit(const std::shared_ptr<VertexArray>& vertexArray, const Shader& shader)
+    {      
+        shader.Bind();
+        shader.SetUniformMat4("u_view", s_camera.GetView());
+        shader.SetUniformMat4("u_proj", s_camera.GetProjection());
         vertexArray->Bind();
         RenderCommand::DrawIndexed(vertexArray);
     }

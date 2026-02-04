@@ -1,6 +1,9 @@
 #include "AcroyPCH.hpp"
 #include "Core/Application.hpp"
+#include "Core/Timestep.hpp"
 #include "Core/Log.hpp"
+
+#include <GLFW/glfw3.h>
 #include <glad/glad.h>
 
 namespace Acroy
@@ -14,6 +17,11 @@ namespace Acroy
         s_instance = this;
         m_window = std::unique_ptr<Window>(Window::Create());
         m_window->SetEventCallback(BIND_EVENT_FN(Application::OnEvent));
+
+        // Temp
+        m_window->SetVSync(false);
+
+        glEnable(GL_DEPTH_TEST);
     }
 
     void Application::OnEvent(Event& event)
@@ -33,8 +41,12 @@ namespace Acroy
     {
         while (m_running)
         {
+            float time = (float)glfwGetTime();
+            Timestep ts = time - m_lastFrameTime;
+            m_lastFrameTime = time;
+
             for (Layer* layer : m_layerStack)
-                layer->OnUpdate();
+                layer->OnUpdate(ts);
 
             m_window->Update();
         }

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Events/Event.hpp"
+#include "Core/Timestep.hpp"
 
 namespace Acroy {
     class Layer
@@ -10,7 +11,7 @@ namespace Acroy {
 
         virtual void OnAttach() {};
         virtual void OnDetach() {};
-        virtual void OnUpdate() {};
+        virtual void OnUpdate(Timestep timestep) {};
         virtual void OnEvent(Event& event) {};
     };
 }

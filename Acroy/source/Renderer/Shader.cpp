@@ -1,7 +1,8 @@
+#include "AcroyPCH.hpp"
 #include "Renderer/Shader.hpp"
 #include "Core/Log.hpp"
 #include <glad/glad.h>
-#include <vector>
+#include <glm/gtc/type_ptr.hpp>
 
 namespace Acroy
 {
@@ -101,5 +102,10 @@ namespace Acroy
     void Shader::UnBind() const
     {
         glUseProgram(0);
+    }
+
+    void Shader::SetUniformMat4(const char* name, const glm::mat4& matrix) const
+    {
+        glUniformMatrix4fv(glGetUniformLocation(m_rendererId, name), 1, false, glm::value_ptr(matrix));
     }
 }

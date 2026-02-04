@@ -12,6 +12,10 @@ namespace Acroy
         glfwMakeContextCurrent(m_windowInstance);
         int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
         ACROY_CORE_ASSERT(status, "Failed to initialize Glad!");
+
+        ACROY_CORE_INFO("Vendor:   {}", (const char*)glGetString(GL_VENDOR));
+        ACROY_CORE_INFO("Renderer: {}", (const char*)glGetString(GL_RENDERER));
+        ACROY_CORE_INFO("Version:  {}", (const char*)glGetString(GL_VERSION));
     }
 
     void OpenGLContext::SwapBuffers()

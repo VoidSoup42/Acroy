@@ -19,13 +19,14 @@ namespace Acroy {
         void PushLayer(Layer* layer);
         void PushOverlay(Layer* layer);
 
-        inline static Application& GetApplicationInstance() {return *s_instance;}
-        inline Window& GetWindow() const {return *m_window;}
+        inline static Application& GetApplicationInstance() { return *s_instance; }
+        inline Window& GetWindow() const { return *m_window; }
 
     private:
         LayerStack m_layerStack;
         std::unique_ptr<Window> m_window;
         bool m_running = true;
+        float m_lastFrameTime = 0.0f;
         static Application* s_instance;
     };
 
