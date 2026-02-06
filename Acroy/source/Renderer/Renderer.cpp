@@ -17,7 +17,7 @@ namespace Acroy
 
     }
 
-    void Renderer::Submit(const std::shared_ptr<VertexArray>& vertexArray, std::shared_ptr<Shader>& shader)
+    void Renderer::Submit(const Ref<VertexArray>& vertexArray, Ref<Shader>& shader)
     {      
         shader->Bind();
         // shader.SetUniformMat4("u_view", s_camera.GetView());

@@ -1,7 +1,7 @@
 #pragma once
 
+#include "Core/Core.hpp"
 #include "Renderer/RendererAPI.hpp"
-
 
 namespace Acroy
 {
@@ -10,6 +10,6 @@ namespace Acroy
     public:
         void SetClearColor(const glm::vec4& color) override;
         void Clear() override;
-        void DrawIndexed(const std::shared_ptr<VertexArray>& vertexArray) override;
+        void DrawIndexed(const Ref<VertexArray>& vertexArray) override;
     };
 }

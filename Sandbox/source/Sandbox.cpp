@@ -125,8 +125,8 @@ class GameLayer : public Acroy::Layer
 private:
     std::unique_ptr<CameraController> m_cameraController;
     std::unique_ptr<Acroy::Camera> m_camera;
-    std::shared_ptr<Acroy::Shader> m_shader;
-    std::shared_ptr<Acroy::VertexArray> m_vao;
+    Acroy::Ref<Acroy::Shader> m_shader;
+    Acroy::Ref<Acroy::VertexArray> m_vao;
 
     void OnAttach() override
     {
@@ -158,7 +158,7 @@ private:
 
         m_vao.reset(Acroy::VertexArray::Create());
 
-        std::shared_ptr<Acroy::VertexBuffer> vbo;
+        Acroy::Ref<Acroy::VertexBuffer> vbo;
         vbo.reset(Acroy::VertexBuffer::Create(vertices, sizeof(vertices)));
 
         Acroy::BufferLayout layout = {
@@ -168,7 +168,7 @@ private:
 
         vbo->SetLayout(layout);
 
-        std::shared_ptr<Acroy::IndexBuffer> ibo;
+        Acroy::Ref<Acroy::IndexBuffer> ibo;
         ibo.reset(Acroy::IndexBuffer::Create(indices, 36));
 
         m_vao->AddVertexBuffer(vbo);

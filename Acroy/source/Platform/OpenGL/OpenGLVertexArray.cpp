@@ -1,4 +1,5 @@
 #include "AcroyPCH.hpp"
+#include "Core/Core.hpp"
 #include "Platform/OpenGL/OpenGLVertexArray.hpp"
 #include <glad/glad.h>
 
@@ -35,7 +36,7 @@ namespace Acroy
         glDeleteVertexArrays(1, &m_rendererId);
     }
 
-    void OpenGLVertexArray::AddVertexBuffer(std::shared_ptr<VertexBuffer>& vertexBuffer)
+    void OpenGLVertexArray::AddVertexBuffer(Ref<VertexBuffer>& vertexBuffer)
     {
         ACROY_CORE_ASSERT(vertexBuffer->GetLayout().GetAttributes().size(), "Vertex Buffer has no layout");
 
@@ -55,7 +56,7 @@ namespace Acroy
         glBindVertexArray(0);
     }
 
-    void OpenGLVertexArray::SetIndexBuffer(std::shared_ptr<IndexBuffer>& indexBuffer)
+    void OpenGLVertexArray::SetIndexBuffer(Ref<IndexBuffer>& indexBuffer)
     {
         m_indexBuffer = indexBuffer;
         glBindVertexArray(m_rendererId);
