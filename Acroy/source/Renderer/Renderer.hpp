@@ -16,7 +16,7 @@ namespace Acroy
         static void BeginScene(const Camera& cam);
         static void EndScene();
 
-        static void Submit(const std::shared_ptr<VertexArray>& vertexArray, const Shader& shader);
+        static void Submit(const std::shared_ptr<VertexArray>& vertexArray, std::shared_ptr<Shader>& shader);
 
     private:
         static Camera s_camera;

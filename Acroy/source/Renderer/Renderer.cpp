@@ -1,4 +1,5 @@
 #include "Renderer/Renderer.hpp"
+#include "Platform/OpenGL/OpenGLShader.hpp" // Temp
 
 namespace Acroy
 {
@@ -16,11 +17,15 @@ namespace Acroy
 
     }
 
-    void Renderer::Submit(const std::shared_ptr<VertexArray>& vertexArray, const Shader& shader)
+    void Renderer::Submit(const std::shared_ptr<VertexArray>& vertexArray, std::shared_ptr<Shader>& shader)
     {      
-        shader.Bind();
-        shader.SetUniformMat4("u_view", s_camera.GetView());
-        shader.SetUniformMat4("u_proj", s_camera.GetProjection());
+        shader->Bind();
+        // shader.SetUniformMat4("u_view", s_camera.GetView());
+        // shader.SetUniformMat4("u_proj", s_camera.GetProjection());
+
+        std::dynamic_pointer_cast<OpenGLShader>(shader)->SetUniformMat4("u_view", s_camera.GetView());
+        std::dynamic_pointer_cast<OpenGLShader>(shader)->SetUniformMat4("u_proj", s_camera.GetProjection());
+
         vertexArray->Bind();
         RenderCommand::DrawIndexed(vertexArray);
     }

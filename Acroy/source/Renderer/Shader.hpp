@@ -8,15 +8,11 @@ namespace Acroy
     class Shader
     {
     public:
-        Shader(const std::string& vertexSrc, const std::string& fragmentSrc);
-        ~Shader();
+        static Shader* Create(const std::string& vertexSource, const std::string& fragmentSource);
 
-        void Bind() const;
-        void UnBind() const;
+        virtual ~Shader() {};
 
-        void SetUniformMat4(const char* name, const glm::mat4& matrix) const;
-
-    private:
-        uint32_t m_rendererId = 0;
+        virtual void Bind() const = 0;
+        virtual void UnBind() const = 0;
     };
 }

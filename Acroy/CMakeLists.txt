@@ -36,6 +36,8 @@ add_library(Acroy SHARED
     source/Platform/OpenGL/OpenGLContext.cpp
     source/Platform/OpenGL/OpenGLBuffer.hpp
     source/Platform/OpenGL/OpenGLBuffer.cpp
+    source/Platform/OpenGL/OpenGLShader.hpp
+    source/Platform/OpenGL/OpenGLShader.cpp
     source/Platform/OpenGL/OpenGLVertexArray.hpp
     source/Platform/OpenGL/OpenGLVertexArray.cpp
     source/Platform/OpenGL/OpenGLRendererAPI.hpp

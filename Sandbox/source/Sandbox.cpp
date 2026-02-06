@@ -125,7 +125,7 @@ class GameLayer : public Acroy::Layer
 private:
     std::unique_ptr<CameraController> m_cameraController;
     std::unique_ptr<Acroy::Camera> m_camera;
-    std::unique_ptr<Acroy::Shader> m_shader;
+    std::shared_ptr<Acroy::Shader> m_shader;
     std::shared_ptr<Acroy::VertexArray> m_vao;
 
     void OnAttach() override
@@ -206,7 +206,7 @@ private:
             }
         )";
 
-        m_shader = std::make_unique<Acroy::Shader>(vertexSrc, fragmentSrc);
+        m_shader.reset(Acroy::Shader::Create(vertexSrc, fragmentSrc));
 
         // -------------------------------
         // ----------- Camera ------------
@@ -244,7 +244,7 @@ private:
         Acroy::RenderCommand::Clear();
 
         Acroy::Renderer::BeginScene(*m_camera);
-        Acroy::Renderer::Submit(m_vao, *m_shader);
+        Acroy::Renderer::Submit(m_vao, m_shader);
         Acroy::Renderer::EndScene();
     }
 };
