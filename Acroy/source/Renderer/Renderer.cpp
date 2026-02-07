@@ -5,7 +5,10 @@ namespace Acroy
 {
     Camera Renderer::s_camera;
 
-    int nothing = 0;
+    void Renderer::Init()
+    {
+        RenderCommand::Init();
+    }
 
     void Renderer::BeginScene(const Camera& camera)
     {
@@ -20,9 +23,6 @@ namespace Acroy
     void Renderer::Submit(const Ref<VertexArray>& vertexArray, Ref<Shader>& shader, const glm::mat4 transform)
     {      
         shader->Bind();
-        // shader.SetUniformMat4("u_view", s_camera.GetView());
-        // shader.SetUniformMat4("u_proj", s_camera.GetProjection());
-
         std::dynamic_pointer_cast<OpenGLShader>(shader)->SetUniformMat4("u_model", transform);
         std::dynamic_pointer_cast<OpenGLShader>(shader)->SetUniformMat4("u_view", s_camera.GetView());
         std::dynamic_pointer_cast<OpenGLShader>(shader)->SetUniformMat4("u_proj", s_camera.GetProjection());

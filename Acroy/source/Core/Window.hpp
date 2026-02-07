@@ -4,6 +4,7 @@
 #include <cstdint>
 #include <string>
 #include "Events/Event.hpp"
+#include "Core/Timestep.hpp"
 
 namespace Acroy
 {
@@ -28,6 +29,8 @@ namespace Acroy
 
         virtual uint32_t GetWidth() const = 0;
         virtual uint32_t GetHeight() const = 0;
+
+        virtual Timestep GetTime() const = 0;
 
         virtual void SetEventCallback(const EventCallbackFn& callback) = 0;
         virtual void SetVSync(bool enabled) = 0;

@@ -16,6 +16,8 @@ namespace Acroy {
         inline uint32_t GetWidth() const override { return m_windowData.width; }
         inline uint32_t GetHeight() const override { return  m_windowData.height; }
 
+        inline Timestep GetTime() const override { return glfwGetTime(); }
+
         void SetEventCallback(const EventCallbackFn& callback) override { m_windowData.eventCallback = callback; }
         void SetVSync(bool enabled) override;
         bool IsVSync() const override;

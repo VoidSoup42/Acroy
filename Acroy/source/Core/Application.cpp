@@ -2,9 +2,7 @@
 #include "Core/Application.hpp"
 #include "Core/Timestep.hpp"
 #include "Core/Log.hpp"
-
-#include <GLFW/glfw3.h>
-#include <glad/glad.h>
+#include "Renderer/Renderer.hpp"
 
 namespace Acroy
 {
@@ -18,10 +16,9 @@ namespace Acroy
         m_window = std::unique_ptr<Window>(Window::Create());
         m_window->SetEventCallback(BIND_EVENT_FN(Application::OnEvent));
 
-        // Temp
         m_window->SetVSync(false);
 
-        glEnable(GL_DEPTH_TEST);
+        Renderer::Init();
     }
 
     void Application::OnEvent(Event& event)
@@ -41,7 +38,7 @@ namespace Acroy
     {
         while (m_running)
         {
-            float time = (float)glfwGetTime();
+            float time = m_window->GetTime();
             Timestep ts = time - m_lastFrameTime;
             m_lastFrameTime = time;
 

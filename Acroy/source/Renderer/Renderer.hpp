@@ -11,8 +11,9 @@ namespace Acroy
     class Renderer
     {
     public:
-        inline static RendererAPI::API GetCurrentAPI() { return RendererAPI::GetAPI();}
+        inline static RendererAPI::API GetCurrentAPI() { return RendererAPI::GetAPI(); }
 
+        static void Init();
         static void BeginScene(const Camera& cam);
         static void EndScene();
 
