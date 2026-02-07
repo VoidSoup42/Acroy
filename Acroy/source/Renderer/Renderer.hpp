@@ -16,7 +16,7 @@ namespace Acroy
         static void BeginScene(const Camera& cam);
         static void EndScene();
 
-        static void Submit(const Ref<VertexArray>& vertexArray, Ref<Shader>& shader);
+        static void Submit(const Ref<VertexArray>& vertexArray, Ref<Shader>& shader, const glm::mat4 transform);
 
     private:
         static Camera s_camera;

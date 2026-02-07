@@ -105,22 +105,27 @@ namespace Acroy
         glUseProgram(0);
     }
 
-    void OpenGLShader::SetUniformFloat(const char* name, const float& value) const
+    void OpenGLShader::SetUniformInt(const char* name, const int value) const
+    {
+        glUniform1i(glGetUniformLocation(m_rendererId, name), value);
+    }
+
+    void OpenGLShader::SetUniformFloat(const char* name, const float value) const
     {
         glUniform1f(glGetUniformLocation(m_rendererId, name), value);
     }
 
-    void OpenGLShader::SetUniformVec2(const char* name, const glm::vec2& value) const
+    void OpenGLShader::SetUniformFloat2(const char* name, const glm::vec2& value) const
     {
         glUniform2fv(glGetUniformLocation(m_rendererId, name), 1, glm::value_ptr(value));
     }
 
-    void OpenGLShader::SetUniformVec3(const char* name, const glm::vec2& value) const
+    void OpenGLShader::SetUniformFloat3(const char* name, const glm::vec2& value) const
     {
         glUniform3fv(glGetUniformLocation(m_rendererId, name), 1, glm::value_ptr(value));
     }
 
-    void OpenGLShader::SetUniformVec4(const char* name, const glm::vec2& value) const
+    void OpenGLShader::SetUniformFloat4(const char* name, const glm::vec2& value) const
     {
         glUniform4fv(glGetUniformLocation(m_rendererId, name), 1, glm::value_ptr(value));
     }

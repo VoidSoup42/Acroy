@@ -27,6 +27,8 @@ add_library(Acroy SHARED
     source/Renderer/RenderingContext.hpp
     source/Renderer/Shader.hpp
     source/Renderer/Shader.cpp
+    source/Renderer//Texture.hpp
+    source/Renderer//Texture.cpp
     source/Renderer/Buffer.hpp
     source/Renderer/Buffer.cpp
     source/Renderer/VertexArray.hpp
@@ -38,16 +40,22 @@ add_library(Acroy SHARED
     source/Platform/OpenGL/OpenGLBuffer.cpp
     source/Platform/OpenGL/OpenGLShader.hpp
     source/Platform/OpenGL/OpenGLShader.cpp
+    source/Platform/OpenGL/OpenGLTexture.hpp
+    source/Platform/OpenGL/OpenGLTexture.cpp
     source/Platform/OpenGL/OpenGLVertexArray.hpp
     source/Platform/OpenGL/OpenGLVertexArray.cpp
     source/Platform/OpenGL/OpenGLRendererAPI.hpp
     source/Platform/OpenGL/OpenGLRendererAPI.cpp
+
+    # Stb
+    vendor/stb/stb_image.cpp
 )
 
 target_include_directories(Acroy PUBLIC
     ${CMAKE_SOURCE_DIR}/Acroy/source
     ${CMAKE_SOURCE_DIR}/Acroy/vendor/spdlog/include
     ${CMAKE_SOURCE_DIR}/Acroy/vendor/glad/include
+    ${CMAKE_SOURCE_DIR}/Acroy/vendor/stb/
 )
 
 target_compile_definitions(Acroy PRIVATE

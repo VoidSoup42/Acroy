@@ -10,7 +10,7 @@ namespace Acroy
         OpenGLVertexBuffer(float* vertices, uint32_t size);
         virtual ~OpenGLVertexBuffer();
 
-        inline void SetLayout(BufferLayout& layout) override { m_layout = layout; }
+        inline void SetLayout(const BufferLayout& layout) override { m_layout = layout; }
         inline const BufferLayout& GetLayout() const override { return m_layout; }
 
         void Bind() const override;
