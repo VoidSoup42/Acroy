@@ -3,12 +3,12 @@
 
 namespace Acroy
 {
-    VertexArray* VertexArray::Create()
+    Ref<VertexArray> VertexArray::Create()
     {
         switch (Renderer::GetCurrentAPI())
         {
             case RendererAPI::API::None:   ACROY_CORE_ASSERT(false, "RendererAPI::None currently not supported");
-            case RendererAPI::API::OpenGL: return new OpenGLVertexArray();
+            case RendererAPI::API::OpenGL: return CreateRef<OpenGLVertexArray>();
         }
 
         ACROY_CORE_ASSERT(false, "Invalid Renderer API");

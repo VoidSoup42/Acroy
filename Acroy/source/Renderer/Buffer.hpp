@@ -1,9 +1,9 @@
 #pragma once
 
+#include "Core/Core.hpp"
+#include "Core/Log.hpp"
 #include <cstdint>
 #include <vector>
-
-#include "Core/Log.hpp"
 
 namespace Acroy
 {
@@ -100,7 +100,7 @@ namespace Acroy
     public:
         virtual ~VertexBuffer() {}
 
-        static VertexBuffer* Create(float* vertices, uint32_t size);
+        static Ref<VertexBuffer> Create(float* vertices, uint32_t size);
 
         virtual void SetLayout(BufferLayout& layout) = 0;
         virtual const BufferLayout& GetLayout() const = 0;
@@ -114,7 +114,7 @@ namespace Acroy
     public:
         virtual ~IndexBuffer() {}
 
-        static IndexBuffer* Create(uint32_t* indices, uint32_t count);
+        static Ref<IndexBuffer> Create(uint32_t* indices, uint32_t count);
 
         virtual uint32_t GetIndicesCount() const = 0;
 

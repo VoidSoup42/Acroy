@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Core/Core.hpp"
 #include <string>
 #include <glm/glm.hpp>
 
@@ -8,7 +9,7 @@ namespace Acroy
     class Shader
     {
     public:
-        static Shader* Create(const std::string& vertexSource, const std::string& fragmentSource);
+        static Ref<Shader> Create(const std::string& vertexSource, const std::string& fragmentSource);
 
         virtual ~Shader() {};
 

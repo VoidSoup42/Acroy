@@ -124,7 +124,7 @@ class GameLayer : public Acroy::Layer
 {
 private:
     std::unique_ptr<CameraController> m_cameraController;
-    std::unique_ptr<Acroy::Camera> m_camera;
+    Acroy::Ref<Acroy::Camera> m_camera;
     Acroy::Ref<Acroy::Shader> m_shader;
     Acroy::Ref<Acroy::VertexArray> m_vao;
 
@@ -156,10 +156,9 @@ private:
             1, 2, 6, 6, 5, 1  // Right
         };
 
-        m_vao.reset(Acroy::VertexArray::Create());
+        m_vao = Acroy::VertexArray::Create();
 
-        Acroy::Ref<Acroy::VertexBuffer> vbo;
-        vbo.reset(Acroy::VertexBuffer::Create(vertices, sizeof(vertices)));
+        Acroy::Ref<Acroy::VertexBuffer> vbo = Acroy::VertexBuffer::Create(vertices, sizeof(vertices));
 
         Acroy::BufferLayout layout = {
             { "position", Acroy::ShaderDataType::Float3 },
@@ -168,8 +167,7 @@ private:
 
         vbo->SetLayout(layout);
 
-        Acroy::Ref<Acroy::IndexBuffer> ibo;
-        ibo.reset(Acroy::IndexBuffer::Create(indices, 36));
+        Acroy::Ref<Acroy::IndexBuffer> ibo = Acroy::IndexBuffer::Create(indices, 36);
 
         m_vao->AddVertexBuffer(vbo);
         m_vao->SetIndexBuffer(ibo);
@@ -206,13 +204,13 @@ private:
             }
         )";
 
-        m_shader.reset(Acroy::Shader::Create(vertexSrc, fragmentSrc));
+        m_shader = Acroy::Shader::Create(vertexSrc, fragmentSrc);
 
         // -------------------------------
         // ----------- Camera ------------
         // -------------------------------
 
-        m_camera = std::make_unique<Acroy::Camera>(80.0f, 16.0f / 9.0f, 0.1f, 100.0f);
+        m_camera = Acroy::CreateRef<Acroy::Camera>(80.0f, 16.0f / 9.0f, 0.1f, 100.0f);
         m_cameraController = std::make_unique<CameraController>(m_camera.get(), 3.0f, 0.15f, glm::vec3(0.0f, 0.0f, 5.0f));
     }
 
