@@ -32,7 +32,7 @@ namespace Acroy
         glClearColor(color.r, color.g, color.b, color.a);
     }
 
-    void Renderer::Submit(const Ref<VertexArray>& vertexArray, Ref<Shader>& shader, const glm::mat4 transform)
+    void Renderer::Submit(const Ref<VertexArray>& vertexArray, Ref<Shader>& shader, const glm::mat4& transform)
     {      
         shader->Bind();
         shader->SetUniformMat4("u_model", transform);
@@ -41,5 +41,16 @@ namespace Acroy
 
         vertexArray->Bind();
         glDrawElements(GL_TRIANGLES, vertexArray->GetIndexBuffer()->GetIndicesCount(), GL_UNSIGNED_INT, nullptr);
+    }
+
+    void Renderer::Submit(const Ref<Mesh>& mesh, Ref<Shader>& shader, const glm::mat4& transform)
+    {
+        shader->Bind();
+        shader->SetUniformMat4("u_model", transform);
+        shader->SetUniformMat4("u_view", s_camera.GetView());
+        shader->SetUniformMat4("u_proj", s_camera.GetProjection());
+
+        mesh->GetVertexArray()->Bind();
+        glDrawElements(GL_TRIANGLES, mesh->GetVertexArray()->GetIndexBuffer()->GetIndicesCount(), GL_UNSIGNED_INT, nullptr);
     }
 }

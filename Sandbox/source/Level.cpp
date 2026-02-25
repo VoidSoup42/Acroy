@@ -16,27 +16,14 @@ void Level::Load()
     };
 
     uint32_t planeIndices[] = { 0, 1, 2, 2, 3, 0 };
-
-    m_groundVertexArray = Acroy::CreateRef<Acroy::VertexArray>();
-
-    Acroy::Ref<Acroy::VertexBuffer> groundVertexBuffer = Acroy::CreateRef<Acroy::VertexBuffer>(planeVertices, sizeof(planeVertices));
-
+    
     Acroy::BufferLayout layout = {
         { "a_position", Acroy::ShaderDataType::Float3, false },
         { "a_normal", Acroy::ShaderDataType::Float3, false },
         { "a_texCoord", Acroy::ShaderDataType::Float2, false }
     };
-
-    groundVertexBuffer->SetLayout(layout);
-
-    m_groundVertexArray->AddVertexBuffer(groundVertexBuffer);
-
-    Acroy::Ref<Acroy::IndexBuffer> groundIndexBuffer = Acroy::CreateRef<Acroy::IndexBuffer>(planeIndices, sizeof(planeIndices) / sizeof(uint32_t));
-    m_groundVertexArray->SetIndexBuffer(groundIndexBuffer);
-
+    m_groundMesh = Acroy::CreateRef<Acroy::Mesh>(planeVertices, sizeof(planeVertices), planeIndices, sizeof(planeIndices) / sizeof(uint32_t), layout);
     m_groundTexture = Acroy::CreateRef<Acroy::Texture2D>("/home/sam/Downloads/Grass008_2K-JPG/Grass008_2K-JPG_Color.jpg");
-
-
 
     // ----------------------------------------
     // -------------- Cube --------------------
@@ -82,21 +69,11 @@ void Level::Load()
         16,17,18,18,19,16, 20,21,22,22,23,20
     };
 
-    m_cubeVertexArray = Acroy::CreateRef<Acroy::VertexArray>();
-
-    Acroy::Ref<Acroy::VertexBuffer> cubeVertexBuffer = Acroy::CreateRef<Acroy::VertexBuffer>(cubeVertices, sizeof(cubeVertices));
-    cubeVertexBuffer->SetLayout(layout);
-
-    m_cubeVertexArray->AddVertexBuffer(cubeVertexBuffer);
-    
-    Acroy::Ref<Acroy::IndexBuffer> cubeIndexBuffer = Acroy::CreateRef<Acroy::IndexBuffer>(cubeIndices, sizeof(cubeIndices) / sizeof(uint32_t));
-    m_cubeVertexArray->SetIndexBuffer(cubeIndexBuffer);
+    m_cubeMesh = Acroy::CreateRef<Acroy::Mesh>(cubeVertices, sizeof(cubeVertices), cubeIndices, sizeof(cubeIndices) / sizeof(uint32_t), layout);
  
     m_cubeTexture = Acroy::CreateRef<Acroy::Texture2D>("/home/sam/Documents/dev/OpenGL-Sandbox-main/resources/textures/Planks/planks.png");
     m_cubeTransform = glm::translate(m_cubeTransform, glm::vec3(0.0, 1.0, 0.0));
     m_cubeTransform = glm::scale(m_cubeTransform, glm::vec3(2.0f));
-
-
 
     // ----------------------------------------
     // -------------- Shader ------------------
@@ -145,9 +122,9 @@ void Level::Update(Acroy::Timestep timestep)
 {
     m_groundTexture->Bind(0);
     m_shader->SetUniformFloat("u_textureScale", 150.0f);
-    Acroy::Renderer::Submit(m_groundVertexArray, m_shader, m_groundTransform);
+    Acroy::Renderer::Submit(m_groundMesh, m_shader, m_groundTransform);
 
     m_cubeTexture->Bind(0);
     m_shader->SetUniformFloat("u_textureScale", 2.0f);
-    Acroy::Renderer::Submit(m_cubeVertexArray, m_shader, m_cubeTransform);
+    Acroy::Renderer::Submit(m_cubeMesh, m_shader, m_cubeTransform);
 }

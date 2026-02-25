@@ -5,6 +5,7 @@
 #include <Renderer/VertexArray.hpp>
 #include <Renderer/Buffer.hpp>
 #include <Core/Timestep.hpp>
+#include <Renderer/Mesh.hpp>
 
 class Level
 {
@@ -15,11 +16,11 @@ public:
 private:
     Acroy::Ref<Acroy::Shader> m_shader;
 
-    Acroy::Ref<Acroy::VertexArray> m_groundVertexArray;
+    Acroy::Ref<Acroy::Mesh> m_groundMesh;
     Acroy::Ref<Acroy::Texture2D> m_groundTexture;
     glm::mat4 m_groundTransform{1.0f};
 
-    Acroy::Ref<Acroy::VertexArray> m_cubeVertexArray;
+    Acroy::Ref<Acroy::Mesh> m_cubeMesh;
     Acroy::Ref<Acroy::Texture2D> m_cubeTexture;
     glm::mat4 m_cubeTransform{1.0f};
 };

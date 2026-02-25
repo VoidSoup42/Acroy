@@ -34,6 +34,9 @@ add_library(Acroy SHARED
     source/Renderer/VertexArray.hpp
     source/Renderer/VertexArray.cpp
 
+    source/Renderer/Mesh.hpp
+    source/Renderer/Mesh.cpp
+
     # Stb
     vendor/stb/stb_image.cpp
 )
@@ -42,7 +45,7 @@ target_include_directories(Acroy PUBLIC
     ${CMAKE_SOURCE_DIR}/Acroy/source
     ${CMAKE_SOURCE_DIR}/Acroy/vendor/spdlog/include
     ${CMAKE_SOURCE_DIR}/Acroy/vendor/glad/include
-    ${CMAKE_SOURCE_DIR}/Acroy/vendor/stb/
+    ${CMAKE_SOURCE_DIR}/Acroy/vendor/stb
 )
 
 target_compile_definitions(Acroy PRIVATE

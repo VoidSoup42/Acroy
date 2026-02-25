@@ -4,6 +4,7 @@
 #include "Renderer/Shader.hpp"
 #include "Renderer/Camera.hpp"
 #include "VertexArray.hpp"
+#include "Mesh.hpp"
 
 namespace Acroy
 {
@@ -16,7 +17,8 @@ namespace Acroy
         static void BeginScene(const Camera& cam);
         static void EndScene();
 
-        static void Submit(const Ref<VertexArray>& vertexArray, Ref<Shader>& shader, const glm::mat4 transform);
+        static void Submit(const Ref<VertexArray>& vertexArray, Ref<Shader>& shader, const glm::mat4& transform);
+        static void Submit(const Ref<Mesh>& mesh, Ref<Shader>& shader, const glm::mat4& transform);
 
     private:
         static Camera s_camera;
