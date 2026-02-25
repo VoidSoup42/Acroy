@@ -5,6 +5,7 @@
 #include <string>
 #include "Events/Event.hpp"
 #include "Core/Timestep.hpp"
+#include <GLFW/glfw3.h>
 
 namespace Acroy
 {
@@ -14,7 +15,7 @@ namespace Acroy
         uint32_t width;
         uint32_t height;
 
-        WindowProps(const std::string& title = "Acroy Application", uint32_t width = 1920, uint32_t height = 1080)
+        WindowProps(const std::string& title = "Acroy Application", uint32_t width = 1280, uint32_t height = 720)
         : title(title), width(width), height(height) {}
     };
     
@@ -23,21 +24,36 @@ namespace Acroy
     public:
         using EventCallbackFn = std::function<void(Event&)>;
 
-        virtual ~Window() = default;
+        Window(const WindowProps& props = WindowProps());
+        ~Window();
 
-        virtual void Update() = 0;
+        void Update();
 
-        virtual uint32_t GetWidth() const = 0;
-        virtual uint32_t GetHeight() const = 0;
+        inline uint32_t GetWidth() const { return m_windowData.width; }
+        inline uint32_t GetHeight() const { return m_windowData.height; }
 
-        virtual Timestep GetTime() const = 0;
+        inline Timestep GetTime() const { return glfwGetTime(); }
 
-        virtual void SetEventCallback(const EventCallbackFn& callback) = 0;
-        virtual void SetVSync(bool enabled) = 0;
-        virtual bool IsVSync() const = 0;
+        void SetEventCallback(const EventCallbackFn& callback) { m_windowData.eventCallback = callback; }
+        void SetVSync(bool enabled);
+        inline bool IsVSync() const { return m_windowData.vSync; }
 
-        virtual void* GetNativeWindow() const = 0;
+        GLFWwindow* GetGlfwWindow() const { return m_window; }
 
-        static Window* Create(const WindowProps& props = WindowProps());
+    private:
+        GLFWwindow* m_window;
+
+        struct WindowData
+        {
+            std::string title;
+            uint32_t width, height;
+            bool vSync;
+
+            EventCallbackFn eventCallback;
+        };
+
+        WindowData m_windowData;
+
+        static bool s_glfwInitialized;
     };
 }

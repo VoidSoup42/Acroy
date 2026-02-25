@@ -1,5 +1,5 @@
 #include "Renderer/Renderer.hpp"
-#include "Platform/OpenGL/OpenGLShader.hpp" // Temp
+#include <glad/glad.h>
 
 namespace Acroy
 {
@@ -7,7 +7,9 @@ namespace Acroy
 
     void Renderer::Init()
     {
-        RenderCommand::Init();
+        glEnable(GL_DEPTH_TEST);
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     }
 
     void Renderer::BeginScene(const Camera& camera)
@@ -17,17 +19,27 @@ namespace Acroy
     
     void Renderer::EndScene()
     {
+        // Pass
+    }
 
+    void Renderer::Clear()
+    {
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    }
+
+    void Renderer::SetClearColor(const glm::vec4& color)
+    {
+        glClearColor(color.r, color.g, color.b, color.a);
     }
 
     void Renderer::Submit(const Ref<VertexArray>& vertexArray, Ref<Shader>& shader, const glm::mat4 transform)
     {      
         shader->Bind();
-        std::dynamic_pointer_cast<OpenGLShader>(shader)->SetUniformMat4("u_model", transform);
-        std::dynamic_pointer_cast<OpenGLShader>(shader)->SetUniformMat4("u_view", s_camera.GetView());
-        std::dynamic_pointer_cast<OpenGLShader>(shader)->SetUniformMat4("u_proj", s_camera.GetProjection());
+        shader->SetUniformMat4("u_model", transform);
+        shader->SetUniformMat4("u_view", s_camera.GetView());
+        shader->SetUniformMat4("u_proj", s_camera.GetProjection());
 
         vertexArray->Bind();
-        RenderCommand::DrawIndexed(vertexArray);
+        glDrawElements(GL_TRIANGLES, vertexArray->GetIndexBuffer()->GetIndicesCount(), GL_UNSIGNED_INT, nullptr);
     }
 }

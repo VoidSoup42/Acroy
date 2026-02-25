@@ -1,33 +1,33 @@
-#include "Platform/Linux/LinuxInput.hpp"
-#include "Core/Application.hpp"
+#include "Application.hpp"
+#include "Input.hpp"
 #include <GLFW/glfw3.h>
 
 namespace Acroy {
     
-    Input* Input::s_instance = new LinuxInput();
-    
-    bool LinuxInput::IsKeyPressedImpl(int keycode)
+    MouseMode Input::m_mouseMode = MouseMode::Normal;
+
+    bool Input::IsKeyPressed(int keycode)
     {
-        GLFWwindow* window = static_cast<GLFWwindow*>(Application::GetApplicationInstance().GetWindow().GetNativeWindow());
+        GLFWwindow* window = Application::GetApplicationInstance().GetWindow().GetGlfwWindow();
         int state = glfwGetKey(window, keycode);
         return state == GLFW_PRESS || state == GLFW_REPEAT;
     }
 
-    bool LinuxInput::IsMouseButtonPressedImpl(int button)
+    bool Input::IsMouseButtonPressed(int button)
     {
-        GLFWwindow* window = static_cast<GLFWwindow*>(Application::GetApplicationInstance().GetWindow().GetNativeWindow());
+        GLFWwindow* window = Application::GetApplicationInstance().GetWindow().GetGlfwWindow();
         return glfwGetMouseButton(window, button) == GLFW_PRESS;
     }
 
-    glm::vec2 LinuxInput::GetMousePositionImpl()
+    glm::vec2 Input::GetMousePosition()
     {
-        GLFWwindow* window = static_cast<GLFWwindow*>(Application::GetApplicationInstance().GetWindow().GetNativeWindow());
+        GLFWwindow* window = Application::GetApplicationInstance().GetWindow().GetGlfwWindow();
         double x, y;
         glfwGetCursorPos(window, &x, &y);
         return { static_cast<float>(x), static_cast<float>(y) };
     }
 
-    void LinuxInput::SetMouseModeImpl(MouseMode mode)
+    void Input::SetMouseMode(MouseMode mode)
     {
         if (mode == m_mouseMode)
             return;
@@ -41,7 +41,7 @@ namespace Acroy {
             case MouseMode::Disabled:  glfwMode = GLFW_CURSOR_DISABLED; break;
         }
 
-        GLFWwindow* window = static_cast<GLFWwindow*>(Application::GetApplicationInstance().GetWindow().GetNativeWindow());
+        GLFWwindow* window = Application::GetApplicationInstance().GetWindow().GetGlfwWindow();
         glfwSetInputMode(window, GLFW_CURSOR, glfwMode);
         m_mouseMode = mode;
     }

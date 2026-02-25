@@ -1,21 +1,17 @@
-#include "LinuxWindow.hpp"
-#include "Core/Log.hpp"
+#include "AcroyPCH.hpp"
+#include "Window.hpp"
+#include "Log.hpp"
 #include "Events/ApplicationEvent.hpp"
 #include "Events/KeyEvent.hpp"
 #include "Events/MouseEvent.hpp"
-#include "Platform/OpenGL/OpenGLContext.hpp"
+
 #include <glad/glad.h>
 
-namespace Acroy {
+namespace Acroy
+{
+    bool Window::s_glfwInitialized = false;
 
-    static bool s_glfwInitialized = false;
-
-    Window* Window::Create(const WindowProps& props)
-    {
-        return new LinuxWindow(props);
-    }
-
-    LinuxWindow::LinuxWindow(const WindowProps& props)
+    Window::Window(const WindowProps& props)
     {
         m_windowData.title = props.title;
         m_windowData.width = props.width;
@@ -36,8 +32,17 @@ namespace Acroy {
         ACROY_CORE_INFO("Creating {} window: {} ({}, {})", glfwGetPlatform() == GLFW_PLATFORM_X11 ? "X11" : glfwGetPlatform() == GLFW_PLATFORM_WAYLAND ? "Wayland" : "Linux", props.title, props.width, props.height);
 
         m_window = glfwCreateWindow(props.width, props.height, props.title.c_str(), nullptr, nullptr);
-        m_context = new OpenGLContext(m_window);
-        m_context->Init();
+        
+        glfwMakeContextCurrent(m_window);
+        int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
+        ACROY_CORE_ASSERT(status, "Failed to initialize Glad!");
+
+        ACROY_CORE_INFO("Vendor:   {}", (const char*)glGetString(GL_VENDOR));
+        ACROY_CORE_INFO("Renderer: {}", (const char*)glGetString(GL_RENDERER));
+        ACROY_CORE_INFO("Version:  {}", (const char*)glGetString(GL_VERSION));
+
+        // m_context = new OpenGLContext(m_window);
+        // m_context->Init();
 
         glfwSetWindowUserPointer(m_window, &m_windowData);
 
@@ -122,25 +127,21 @@ namespace Acroy {
         });
     }
 
-    void LinuxWindow::Update()
+    void Window::Update()
     {
         glfwPollEvents();
         glfwSwapBuffers(m_window);
     }
 
-    LinuxWindow::~LinuxWindow()
+    Window::~Window()
     {
         glfwDestroyWindow(m_window);
     }
 
-    void LinuxWindow::SetVSync(bool enabled)
+    void Window::SetVSync(bool enabled)
     {
         glfwSwapInterval(enabled ? 1 : 0);
         m_windowData.vSync = enabled;
     }
-
-    bool LinuxWindow::IsVSync() const
-    {
-        return m_windowData.vSync;
-    }
-}
+    
+} // namespace Acroy

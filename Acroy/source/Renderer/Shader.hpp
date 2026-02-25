@@ -9,11 +9,21 @@ namespace Acroy
     class Shader
     {
     public:
-        static Ref<Shader> Create(const std::string& vertexSource, const std::string& fragmentSource);
+        Shader(const std::string& vertexSource, const std::string& fragmentSource);
+        ~Shader();
 
-        virtual ~Shader() {};
+        void Bind() const;
+        void UnBind() const;
 
-        virtual void Bind() const = 0;
-        virtual void UnBind() const = 0;
+        void SetUniformInt(const char* name, const int value) const;
+        void SetUniformFloat(const char* name, const float value) const;
+        void SetUniformFloat2(const char* name, const glm::vec2& value) const;
+        void SetUniformFloat3(const char* name, const glm::vec3& value) const;
+        void SetUniformFloat4(const char* name, const glm::vec4& value) const;
+        void SetUniformMat3(const char* name, const glm::mat3& matrix) const;
+        void SetUniformMat4(const char* name, const glm::mat4& matrix) const;
+
+    private:
+        uint32_t m_rendererId;
     };
 }

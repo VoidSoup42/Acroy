@@ -1,19 +1,18 @@
 #pragma once
 
 #include <glm/glm.hpp>
-#include "Renderer/RendererAPI.hpp"
-#include "Renderer/RenderCommand.hpp"
 #include "Renderer/Shader.hpp"
 #include "Renderer/Camera.hpp"
+#include "VertexArray.hpp"
 
 namespace Acroy
 {
     class Renderer
     {
     public:
-        inline static RendererAPI::API GetCurrentAPI() { return RendererAPI::GetAPI(); }
-
         static void Init();
+        static void SetClearColor(const glm::vec4& color);
+        static void Clear();
         static void BeginScene(const Camera& cam);
         static void EndScene();
 

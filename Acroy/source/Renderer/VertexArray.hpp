@@ -8,15 +8,21 @@ namespace Acroy
     class VertexArray
     {
     public:
-        static Ref<VertexArray> Create();
+        VertexArray();
+        ~VertexArray();
 
-        virtual void AddVertexBuffer(Ref<VertexBuffer>& vertexBuffer) = 0;
-        virtual void SetIndexBuffer(Ref<IndexBuffer>& indexBuffer) = 0;
+        void AddVertexBuffer(Ref<VertexBuffer>& vertexBuffer);
+        void SetIndexBuffer(Ref<IndexBuffer>& indexBuffer);
 
-        virtual void Bind() const = 0;
-        virtual void UnBind() const = 0;
+        void Bind() const;
+        void UnBind() const;
 
-        virtual const std::vector<Ref<VertexBuffer>> GetVertexBuffers() const = 0;
-		virtual const Ref<IndexBuffer> GetIndexBuffer() const = 0;
+        inline const std::vector<Ref<VertexBuffer>> GetVertexBuffers() const { return m_vertexBuffers; }
+		inline const Ref<IndexBuffer> GetIndexBuffer() const { return m_indexBuffer; }
+
+    private:
+        uint32_t m_rendererID = 0;
+        std::vector<Ref<VertexBuffer>> m_vertexBuffers;
+        Ref<IndexBuffer> m_indexBuffer;
     }; 
 }

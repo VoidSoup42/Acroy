@@ -1,5 +1,4 @@
 #include <Acroy.hpp>
-#include "Platform/OpenGL/OpenGLShader.hpp"
 
 class CameraController // Vibe Coded Camera Controller
 {
@@ -153,15 +152,22 @@ private:
         };
         uint32_t planeIndices[] = { 0, 1, 2, 2, 3, 0 };
 
-        m_planeVAO = Acroy::VertexArray::Create();
-        auto planeVBO = Acroy::VertexBuffer::Create(planeVertices, sizeof(planeVertices));
+
+
+        m_planeVAO = Acroy::CreateRef<Acroy::VertexArray>();
+
+
+        auto planeVBO = Acroy::CreateRef<Acroy::VertexBuffer>(planeVertices, sizeof(planeVertices));
+
         Acroy::BufferLayout layout = {
             { "position", Acroy::ShaderDataType::Float3 },
             { "normal",   Acroy::ShaderDataType::Float3 },
             { "texCoord", Acroy::ShaderDataType::Float2 }
         };
+
         planeVBO->SetLayout(layout);
-        auto planeIBO = Acroy::IndexBuffer::Create(planeIndices, 6);
+
+        auto planeIBO = Acroy::CreateRef<Acroy::IndexBuffer>(planeIndices, 6);
         m_planeVAO->AddVertexBuffer(planeVBO);
         m_planeVAO->SetIndexBuffer(planeIBO);
 
@@ -205,14 +211,15 @@ private:
              8,9,10,10,11,8, 12,13,14,14,15,12,
              16,17,18,18,19,16, 20,21,22,22,23,20
         };
-        m_cubeVAO = Acroy::VertexArray::Create();
-        auto cubeVBO = Acroy::VertexBuffer::Create(cubeVertices, sizeof(cubeVertices));
+        
+        m_cubeVAO = Acroy::CreateRef<Acroy::VertexArray>();
+        auto cubeVBO = Acroy::CreateRef<Acroy::VertexBuffer>(cubeVertices, sizeof(cubeVertices));
         cubeVBO->SetLayout({
             { "position", Acroy::ShaderDataType::Float3 },
             { "normal",   Acroy::ShaderDataType::Float3 },
             { "texCoord", Acroy::ShaderDataType::Float2 }
         });
-        auto cubeIBO = Acroy::IndexBuffer::Create(cubeIndices, 36);
+        auto cubeIBO = Acroy::CreateRef<Acroy::IndexBuffer>(cubeIndices, 36);
         m_cubeVAO->AddVertexBuffer(cubeVBO);
         m_cubeVAO->SetIndexBuffer(cubeIBO);
 
@@ -226,14 +233,14 @@ private:
 
         uint32_t logoIndices[] = { 0, 1, 2, 2, 3, 0 };
 
-        m_logoVAO = Acroy::VertexArray::Create();
-        auto logoVBO = Acroy::VertexBuffer::Create(logoVertices, sizeof(logoVertices));
+        m_logoVAO = Acroy::CreateRef<Acroy::VertexArray>();
+        auto logoVBO = Acroy::CreateRef<Acroy::VertexBuffer>(logoVertices, sizeof(logoVertices));
         logoVBO->SetLayout({
             { "position", Acroy::ShaderDataType::Float3 },
             { "normal",   Acroy::ShaderDataType::Float3 },
             { "texCoord", Acroy::ShaderDataType::Float2 }
         });
-        auto logoIBO = Acroy::IndexBuffer::Create(logoIndices, 6);
+        auto logoIBO = Acroy::CreateRef<Acroy::IndexBuffer>(logoIndices, 6);
         m_logoVAO->AddVertexBuffer(logoVBO);
         m_logoVAO->SetIndexBuffer(logoIBO);
 
@@ -274,18 +281,18 @@ private:
                     FragColor = texture(u_texture, v_texCoord);
             }
         )";
-        m_shader = Acroy::Shader::Create(vertexSrc, fragSrc);
+        m_shader = Acroy::CreateRef<Acroy::Shader>(vertexSrc, fragSrc);
 
         // -------------------------------
         // ----------- Textures ----------
         // -------------------------------
-        // m_planeTexture = Acroy::Texture2D::Create("/home/sam/Documents/dev/OpenGL-Sandbox-main/resources/textures/Planks/planks.png");
-        m_planeTexture = Acroy::Texture2D::Create("/home/sam/Downloads/Grass005_2K-JPG/Grass005_2K-JPG_Color.jpg");
-        m_cubeTexture  = Acroy::Texture2D::Create("/home/sam/Documents/dev/OpenGL-Sandbox-main/resources/textures/Planks/planks.png");
-        // m_cubeTexture  = Acroy::Texture2D::Create("/home/sam/Documents/dev/Neonix/Resources/Textures/kenney_prototype-textures/PNG/Green/texture_01.png");
-        m_logoTexture  = Acroy::Texture2D::Create("/home/sam/Downloads/Communisiom.png");
+        // m_planeTexture = Acroy::CreateRef<Acroy::Texture2D>("/home/sam/Documents/dev/OpenGL-Sandbox-main/resources/textures/Planks/planks.png");
+        m_planeTexture = Acroy::CreateRef<Acroy::Texture2D>("/home/sam/Downloads/Grass008_2K-JPG/Grass008_2K-JPG_Color.jpg");
+        m_cubeTexture  = Acroy::CreateRef<Acroy::Texture2D>("/home/sam/Documents/dev/OpenGL-Sandbox-main/resources/textures/Planks/planks.png");
+        // m_cubeTexture  = Acroy::CreateRef<Acroy::Texture2D>("/home/sam/Documents/dev/Neonix/Resources/Textures/kenney_prototype-textures/PNG/Green/texture_01.png");
+        m_logoTexture  = Acroy::CreateRef<Acroy::Texture2D>("/home/sam/Downloads/pngwing.com.png");
 
-        std::dynamic_pointer_cast<Acroy::OpenGLShader>(m_shader)->SetUniformInt("u_texture", 0);
+        m_shader->SetUniformInt("u_texture", 0);
 
         // -------------------------------
         // ----------- Camera ------------
@@ -305,19 +312,19 @@ private:
     {
         m_cameraController->OnUpdate(ts);
 
-        Acroy::RenderCommand::SetClearColor({0.73f,0.81f,0.92f,1.0f});
-        Acroy::RenderCommand::Clear();
+        Acroy::Renderer::SetClearColor({0.73f,0.81f,0.92f,1.0f});
+        Acroy::Renderer::Clear();
 
         Acroy::Renderer::BeginScene(*m_camera);
 
         // Render plane
         m_planeTexture->Bind(0);
-        std::dynamic_pointer_cast<Acroy::OpenGLShader>(m_shader)->SetUniformInt("u_scaleTex", 1);
+        m_shader->SetUniformInt("u_scaleTex", 1);
         Acroy::Renderer::Submit(m_planeVAO, m_shader, glm::mat4(1.0f));
 
         // Render cubes
         m_cubeTexture->Bind(0);
-        std::dynamic_pointer_cast<Acroy::OpenGLShader>(m_shader)->SetUniformInt("u_scaleTex", 0);
+        m_shader->SetUniformInt("u_scaleTex", 0);
         for (auto& pos : m_cubePositions)
         {
             glm::mat4 model = glm::translate(glm::mat4(1.0f), pos) * glm::scale(glm::mat4(1.0f), glm::vec3(2.0f));

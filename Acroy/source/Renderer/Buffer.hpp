@@ -98,27 +98,35 @@ namespace Acroy
     class VertexBuffer
     {
     public:
-        virtual ~VertexBuffer() {}
+        ~VertexBuffer();
 
-        static Ref<VertexBuffer> Create(float* vertices, uint32_t size);
+        VertexBuffer(const void* vertices, uint32_t size);
 
-        virtual void SetLayout(const BufferLayout& layout) = 0;
-        virtual const BufferLayout& GetLayout() const = 0;
+        inline void SetLayout(const BufferLayout& layout) { m_layout = layout; }
+        inline const BufferLayout& GetLayout() const { return m_layout; }
 
-        virtual void Bind() const = 0;
-        virtual void UnBind() const = 0;
+        void Bind() const;
+        void UnBind() const;
+
+    private:
+        uint32_t m_rendererID;
+        BufferLayout m_layout;
     };   
 
     class IndexBuffer
     {
     public:
-        virtual ~IndexBuffer() {}
+        ~IndexBuffer();
 
-        static Ref<IndexBuffer> Create(uint32_t* indices, uint32_t count);
+        IndexBuffer(uint32_t* indices, uint32_t count);
 
-        virtual uint32_t GetIndicesCount() const = 0;
+        inline uint32_t GetIndicesCount() const { return m_indicesCount; }
 
-        virtual void Bind() const = 0;
-        virtual void UnBind() const = 0;
+        void Bind() const;
+        void UnBind() const;
+
+    private:
+        uint32_t m_rendererID;
+        uint32_t m_indicesCount;
     };
 }

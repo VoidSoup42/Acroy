@@ -13,7 +13,9 @@ namespace Acroy
     Application::Application()
     {
         s_instance = this;
-        m_window = std::unique_ptr<Window>(Window::Create());
+        
+        m_window = std::make_unique<Window>();
+
         m_window->SetEventCallback(BIND_EVENT_FN(Application::OnEvent));
 
         m_window->SetVSync(false);

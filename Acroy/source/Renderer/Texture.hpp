@@ -18,6 +18,17 @@ namespace Acroy
     class Texture2D : public Texture
     {
     public:
-        static Ref<Texture2D> Create(const std::string& path);
+        Texture2D(const std::string& path);
+        ~Texture2D() override;
+
+        inline uint32_t GetWidth() const override { return m_width; }
+        inline uint32_t GetHeight() const override { return m_height; }
+
+        void Bind(uint32_t slot) const override;
+
+    private:
+        uint32_t m_width;
+        uint32_t m_height;
+        uint32_t m_rendererId;
     };
 }

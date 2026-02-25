@@ -1,32 +1,56 @@
 #include "AcroyPCH.hpp"
 #include "Renderer/Buffer.hpp"
-#include "Platform/OpenGL/OpenGLBuffer.hpp"
-#include "Renderer/Renderer.hpp"
 #include "Core/Log.hpp"
+#include "glad/glad.h"
 
 namespace Acroy
 {
-    Ref<VertexBuffer> VertexBuffer::Create(float* vertices, uint32_t size)
+    VertexBuffer::VertexBuffer(const void* vertices, uint32_t size)
     {
-        switch (Renderer::GetCurrentAPI())
-        {
-            case RendererAPI::API::None:   ACROY_CORE_ASSERT(false, "RendererAPI::None currently not supported");
-            case RendererAPI::API::OpenGL: return CreateRef<OpenGLVertexBuffer>(vertices, size);
-        }
+        // glCreateBuffers(1, &m_rendererID);
+        // glNamedBufferData(m_rendererID, size, vertices, GL_STATIC_DRAW);
 
-        ACROY_CORE_ASSERT(false, "Unknown API");
-        return nullptr;
+        glGenBuffers(1, &m_rendererID);
+        glBindBuffer(GL_ARRAY_BUFFER, m_rendererID);
+        glBufferData(GL_ARRAY_BUFFER, size, vertices, GL_STATIC_DRAW);
     }
 
-    Ref<IndexBuffer> IndexBuffer::Create(uint32_t* indices, uint32_t count)
+    VertexBuffer::~VertexBuffer()
     {
-        switch (Renderer::GetCurrentAPI())
-        {
-            case RendererAPI::API::None:   ACROY_CORE_ASSERT(false, "RendererAPI::None currently not supported");
-            case RendererAPI::API::OpenGL: return CreateRef<OpenGLIndexBuffer>(indices, count);
-        }
+        glDeleteBuffers(1, &m_rendererID);
+    }
 
-        ACROY_CORE_ASSERT(false, "Unknown API");
-        return nullptr;
+    void VertexBuffer::Bind() const
+    {
+        glBindBuffer(GL_ARRAY_BUFFER, m_rendererID);
+    }
+
+    void VertexBuffer::UnBind() const
+    {
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+    }
+
+
+
+    IndexBuffer::IndexBuffer(uint32_t* indices, uint32_t count) : m_indicesCount(count)
+    {
+        glCreateBuffers(1, &m_rendererID);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_rendererID);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(uint32_t), indices, GL_STATIC_DRAW);
+    }
+
+    void IndexBuffer::Bind() const
+    {
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_rendererID);
+    }
+
+    void IndexBuffer::UnBind() const
+    {
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    }
+
+    IndexBuffer::~IndexBuffer()
+    {
+        glDeleteBuffers(1, &m_rendererID);
     }
 }

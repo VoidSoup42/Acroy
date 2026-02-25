@@ -1,51 +1,38 @@
 add_library(Acroy SHARED
     source/Core/Input.hpp
+    source/Core/Input.cpp
+
     source/Core/Window.hpp
+    source/Core/Window.cpp
+
     source/Core/Application.hpp
     source/Core/Application.cpp
+
     source/Core/Log.hpp
     source/Core/Log.cpp
+
     source/Core/Layer.hpp
     source/Core/LayerStack.hpp
     source/Core/LayerStack.cpp
     source/Core/Timestep.hpp
-
-    source/Platform/Linux/LinuxWindow.hpp
-    source/Platform/Linux/LinuxWindow.cpp
-    source/Platform/Linux/LinuxInput.hpp
-    source/Platform/Linux/LinuxInput.cpp
 
     source/Renderer/Camera.hpp
     source/Renderer/Camera.cpp
 
     source/Renderer/Renderer.hpp
     source/Renderer/Renderer.cpp
-    source/Renderer/RenderCommand.hpp
-    source/Renderer/RenderCommand.cpp
-    source/Renderer/RendererAPI.hpp
-    source/Renderer/RendererAPI.cpp
-    source/Renderer/RenderingContext.hpp
+
     source/Renderer/Shader.hpp
     source/Renderer/Shader.cpp
-    source/Renderer//Texture.hpp
-    source/Renderer//Texture.cpp
+
+    source/Renderer/Texture.hpp
+    source/Renderer/Texture.cpp
+
     source/Renderer/Buffer.hpp
     source/Renderer/Buffer.cpp
+
     source/Renderer/VertexArray.hpp
     source/Renderer/VertexArray.cpp
-
-    source/Platform/OpenGL/OpenGLContext.hpp
-    source/Platform/OpenGL/OpenGLContext.cpp
-    source/Platform/OpenGL/OpenGLBuffer.hpp
-    source/Platform/OpenGL/OpenGLBuffer.cpp
-    source/Platform/OpenGL/OpenGLShader.hpp
-    source/Platform/OpenGL/OpenGLShader.cpp
-    source/Platform/OpenGL/OpenGLTexture.hpp
-    source/Platform/OpenGL/OpenGLTexture.cpp
-    source/Platform/OpenGL/OpenGLVertexArray.hpp
-    source/Platform/OpenGL/OpenGLVertexArray.cpp
-    source/Platform/OpenGL/OpenGLRendererAPI.hpp
-    source/Platform/OpenGL/OpenGLRendererAPI.cpp
 
     # Stb
     vendor/stb/stb_image.cpp
