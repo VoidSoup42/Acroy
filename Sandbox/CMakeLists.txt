@@ -1,6 +1,12 @@
-add_executable(Sandbox_Application)
-
-target_sources(Sandbox_Application PUBLIC source/Sandbox.cpp)
+add_executable(Sandbox_Application
+    source/Main.cpp
+    source/SandboxLayer.hpp
+    source/SandboxLayer.cpp
+    source/CameraController.hpp
+    source/CameraController.cpp
+    source/Level.hpp
+    source/Level.cpp
+)
 
 target_link_libraries(Sandbox_Application PUBLIC Acroy)
 
