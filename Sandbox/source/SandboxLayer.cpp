@@ -11,19 +11,16 @@ void SandboxLayer::OnAttach()
     m_cameraController = std::make_unique<CameraController>(m_camera.get(), 3.0f, 0.1f, glm::vec3(0,1,10));
     m_cameraController->SetActive(true);
 
-    m_level.Load();   
+    m_level.Load(m_camera);
 }
 
 void SandboxLayer::OnUpdate(Acroy::Timestep timestep)
 {
-    m_cameraController->OnUpdate(timestep);
-
     Acroy::Renderer::SetClearColor({0.73f,0.81f,0.92f,1.0f});
     Acroy::Renderer::Clear();
 
-    Acroy::Renderer::BeginScene(*m_camera);
+    m_cameraController->OnUpdate(timestep);
     m_level.Update(timestep);
-    Acroy::Renderer::EndScene();
 }
 
 void SandboxLayer::OnEvent(Acroy::Event& event)

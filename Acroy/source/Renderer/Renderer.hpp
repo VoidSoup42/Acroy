@@ -14,13 +14,13 @@ namespace Acroy
         static void Init();
         static void SetClearColor(const glm::vec4& color);
         static void Clear();
-        static void BeginScene(const Camera& cam);
+        static void BeginScene(const Ref<Camera> cam);
         static void EndScene();
 
-        static void Submit(const Ref<VertexArray>& vertexArray, Ref<Shader>& shader, const glm::mat4& transform);
-        static void Submit(const Ref<Mesh>& mesh, Ref<Shader>& shader, const glm::mat4& transform);
+        static void Submit(const Ref<VertexArray>& vertexArray, const Ref<Shader>& shader, const glm::mat4& transform);
+        static void Submit(const Ref<Mesh>& mesh, const Ref<Shader>& shader, const glm::mat4& transform);
 
     private:
-        static Camera s_camera;
+        static Ref<Camera> s_camera;
     };
 }

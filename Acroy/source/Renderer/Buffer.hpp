@@ -12,7 +12,7 @@ namespace Acroy
         Float, Float2, Float3, Float4, Int, Int2, Int3, Int4, Mat3, Mat4, Bool
     };
 
-    static uint32_t ShaderDataTypeSize(ShaderDataType type)
+    static constexpr uint32_t ShaderDataTypeSize(ShaderDataType type)
     {
         switch (type)
         {
@@ -41,7 +41,7 @@ namespace Acroy
         size_t offset;
         bool normalized;
 
-        uint32_t GetComponentCount() const
+        constexpr uint32_t GetComponentCount() const
         {
             switch (type)
             {

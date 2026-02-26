@@ -16,6 +16,12 @@ add_library(Acroy SHARED
     source/Core/LayerStack.cpp
     source/Core/Timestep.hpp
 
+    source/Scene/Components.hpp
+    source/Scene/Scene.hpp
+    source/Scene/Scene.cpp
+    source/Scene/Entity.hpp
+    source/Scene/Entity.cpp
+
     source/Renderer/Camera.hpp
     source/Renderer/Camera.cpp
 
@@ -46,6 +52,7 @@ target_include_directories(Acroy PUBLIC
     ${CMAKE_SOURCE_DIR}/Acroy/vendor/spdlog/include
     ${CMAKE_SOURCE_DIR}/Acroy/vendor/glad/include
     ${CMAKE_SOURCE_DIR}/Acroy/vendor/stb
+    ${CMAKE_SOURCE_DIR}/Acroy/vendor/entt
 )
 
 target_compile_definitions(Acroy PRIVATE

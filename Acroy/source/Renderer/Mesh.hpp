@@ -13,7 +13,8 @@ namespace Acroy
     public:
         Mesh(void* vertexData, uint32_t vertexSize, uint32_t* indexData, uint32_t indexCount, const BufferLayout& layout);
 
-        inline Ref<VertexArray> GetVertexArray() const { return m_vertexArray; }
+        inline const Ref<VertexArray> GetVertexArray() const { return m_vertexArray; }
+        inline const uint32_t GetIndicesCount() const { return m_indicesCount; }
 
     private:
         Ref<VertexArray> m_vertexArray;

@@ -2,7 +2,7 @@
 
 namespace Acroy
 {
-    Mesh::Mesh(void* vertexData, uint32_t vertexSize, uint32_t* indexData, uint32_t indexCount, const BufferLayout& layout)
+    Mesh::Mesh(void* vertexData, uint32_t vertexSize, uint32_t* indexData, uint32_t indexCount, const BufferLayout& layout) : m_indicesCount(indexCount)
     {
         m_vertexArray  = CreateRef<VertexArray>();
         m_vertexBuffer = CreateRef<VertexBuffer>(vertexData, vertexSize);

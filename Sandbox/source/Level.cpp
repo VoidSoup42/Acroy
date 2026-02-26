@@ -1,7 +1,10 @@
 #include "Level.hpp"
 #include "Renderer/Renderer.hpp"
+#include <Renderer/Texture.hpp>
+#include <Scene/Entity.hpp>
+#include <Scene/Components.hpp>
 
-void Level::Load()
+void Level::Load(const Acroy::Ref<Acroy::Camera> cam)
 {
     // ----------------------------------------
     // -------------- Ground ------------------
@@ -22,8 +25,8 @@ void Level::Load()
         { "a_normal", Acroy::ShaderDataType::Float3, false },
         { "a_texCoord", Acroy::ShaderDataType::Float2, false }
     };
-    m_groundMesh = Acroy::CreateRef<Acroy::Mesh>(planeVertices, sizeof(planeVertices), planeIndices, sizeof(planeIndices) / sizeof(uint32_t), layout);
-    m_groundTexture = Acroy::CreateRef<Acroy::Texture2D>("/home/sam/Downloads/Grass008_2K-JPG/Grass008_2K-JPG_Color.jpg");
+    Acroy::Ref<Acroy::Mesh> groundMesh = Acroy::CreateRef<Acroy::Mesh>(planeVertices, sizeof(planeVertices), planeIndices, sizeof(planeIndices) / sizeof(uint32_t), layout);
+    Acroy::Ref<Acroy::Texture2D> groundTexture = Acroy::CreateRef<Acroy::Texture2D>("/home/sam/Downloads/Grass008_2K-JPG/Grass008_2K-JPG_Color.jpg");
 
     // ----------------------------------------
     // -------------- Cube --------------------
@@ -69,11 +72,9 @@ void Level::Load()
         16,17,18,18,19,16, 20,21,22,22,23,20
     };
 
-    m_cubeMesh = Acroy::CreateRef<Acroy::Mesh>(cubeVertices, sizeof(cubeVertices), cubeIndices, sizeof(cubeIndices) / sizeof(uint32_t), layout);
+    Acroy::Ref<Acroy::Mesh> cubeMesh = Acroy::CreateRef<Acroy::Mesh>(cubeVertices, sizeof(cubeVertices), cubeIndices, sizeof(cubeIndices) / sizeof(uint32_t), layout);
  
-    m_cubeTexture = Acroy::CreateRef<Acroy::Texture2D>("/home/sam/Documents/dev/OpenGL-Sandbox-main/resources/textures/Planks/planks.png");
-    m_cubeTransform = glm::translate(m_cubeTransform, glm::vec3(0.0, 1.0, 0.0));
-    m_cubeTransform = glm::scale(m_cubeTransform, glm::vec3(2.0f));
+    Acroy::Ref<Acroy::Texture2D> cubeTexture = Acroy::CreateRef<Acroy::Texture2D>("/home/sam/Documents/dev/OpenGL-Sandbox-main/resources/textures/Planks/planks.png");
 
     // ----------------------------------------
     // -------------- Shader ------------------
@@ -112,19 +113,35 @@ void Level::Load()
         }
     )";
 
-    m_shader = Acroy::CreateRef<Acroy::Shader>(vertexSrc, fragSrc);
+    Acroy::Ref<Acroy::Shader> shader = Acroy::CreateRef<Acroy::Shader>(vertexSrc, fragSrc);
 
-    m_shader->Bind();
-    m_shader->SetUniformInt("u_texture", 0);
+
+    // ----------------------------------------
+    // -------------- Setup Scene -------------
+    // ----------------------------------------
+
+    m_scene = Acroy::CreateRef<Acroy::Scene>(cam);
+
+    Acroy::Entity groundEntity = m_scene->Create("Ground");
+    groundEntity.AddComponent<Acroy::MeshComponent>(groundMesh);
+    groundEntity.AddComponent<Acroy::ShaderComponent>(shader);
+
+    Acroy::TextureComponent& groundTextureComponent = groundEntity.AddComponent<Acroy::TextureComponent>(groundTexture);
+    groundTextureComponent.textureScale = 150.0f;
+
+    Acroy::Entity cubeEntity = m_scene->Create("Cube");
+    cubeEntity.AddComponent<Acroy::MeshComponent>(cubeMesh);
+    cubeEntity.AddComponent<Acroy::ShaderComponent>(shader);
+    Acroy::TextureComponent& cubeTextureComponent = cubeEntity.AddComponent<Acroy::TextureComponent>(cubeTexture);
+    cubeTextureComponent.textureScale = 2.0f;
+
+    glm::mat4& cubeTransform = cubeEntity.GetComponent<Acroy::TransformComponent>().transform;
+
+    cubeTransform = glm::translate(cubeTransform, glm::vec3(0.0, 1.0, 0.0));
+    cubeTransform = glm::scale(cubeTransform, glm::vec3(2.0f));
 }
 
 void Level::Update(Acroy::Timestep timestep)
 {
-    m_groundTexture->Bind(0);
-    m_shader->SetUniformFloat("u_textureScale", 150.0f);
-    Acroy::Renderer::Submit(m_groundMesh, m_shader, m_groundTransform);
-
-    m_cubeTexture->Bind(0);
-    m_shader->SetUniformFloat("u_textureScale", 2.0f);
-    Acroy::Renderer::Submit(m_cubeMesh, m_shader, m_cubeTransform);
+    m_scene->OnUpdate(timestep);
 }
