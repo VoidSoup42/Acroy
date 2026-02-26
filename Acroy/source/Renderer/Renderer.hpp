@@ -12,6 +12,7 @@ namespace Acroy
     {
     public:
         static void Init();
+        static void SetViewport(float x, float y, float width, float height);
         static void SetClearColor(const glm::vec4& color);
         static void Clear();
         static void BeginScene(const Ref<Camera> cam);

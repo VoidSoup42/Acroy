@@ -27,6 +27,11 @@ namespace Acroy
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     }
 
+    void Renderer::SetViewport(float x, float y, float width, float height)
+    {
+        glViewport(x, y, width, height);
+    }
+
     void Renderer::SetClearColor(const glm::vec4& color)
     {
         glClearColor(color.r, color.g, color.b, color.a);

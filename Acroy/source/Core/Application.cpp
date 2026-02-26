@@ -34,6 +34,9 @@ namespace Acroy
 				break;
 			(*it)->OnEvent(event);
 		}
+
+        EventDispatcher dispatcher(event);
+        dispatcher.Dispatch<WindowResizeEvent>(BIND_EVENT_FN(Application::OnWindowResize));
     }
 
     void Application::Run()
@@ -61,5 +64,11 @@ namespace Acroy
     {
         m_layerStack.PushOverlay(layer);
         layer->OnAttach();
+    }
+
+    bool Application::OnWindowResize(WindowResizeEvent& event)
+    {
+        Renderer::SetViewport(0, 0, event.GetWidth(), event.GetHeight());
+        return true;
     }
 }

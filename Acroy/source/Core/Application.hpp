@@ -5,6 +5,7 @@
 #include "Core/Layer.hpp"
 #include "Core/Window.hpp"
 #include "Core/LayerStack.hpp"
+#include "Events/ApplicationEvent.hpp"
 
 namespace Acroy {
     class Application
@@ -21,6 +22,8 @@ namespace Acroy {
 
         inline static Application& GetApplicationInstance() { return *s_instance; }
         inline Window& GetWindow() const { return *m_window; }
+
+        bool OnWindowResize(WindowResizeEvent& event);
 
     private:
         LayerStack m_layerStack;

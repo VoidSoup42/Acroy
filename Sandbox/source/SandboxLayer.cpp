@@ -1,6 +1,7 @@
 #include "SandboxLayer.hpp"
 #include <Core/Log.hpp>
 #include <Renderer/Renderer.hpp>
+#include <Events/ApplicationEvent.hpp>
 
 void SandboxLayer::OnAttach()
 {
@@ -26,4 +27,13 @@ void SandboxLayer::OnUpdate(Acroy::Timestep timestep)
 void SandboxLayer::OnEvent(Acroy::Event& event)
 {
     ACROY_TRACE("{0}", event.ToString());
+
+    if (event.GetEventType() == Acroy::EventType::WindowResize)
+    {
+
+        ACROY_INFO("Updating projection");
+        Acroy::WindowResizeEvent* e = static_cast<Acroy::WindowResizeEvent*>(&event);
+
+        m_camera->SetAspect((float)e->GetWidth() / e->GetHeight());
+    }
 }

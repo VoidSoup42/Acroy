@@ -11,7 +11,12 @@ namespace Acroy
         Camera() {};
         Camera(float fov, float aspect, float zNear, float zFar);
 
-        inline void SetFOV(float fov) { m_fov = fov; }
+        void SetFOV(float fov)
+        {
+            m_fov = fov;
+            RecalculateProjection();
+        }
+
         inline float GetFOV() const { return m_fov; }
 
         inline void SetProjection(glm::mat4 proj) { m_projection = proj; }
@@ -20,7 +25,12 @@ namespace Acroy
         inline void SetView(const glm::mat4& view) { m_view = view; }
         inline const glm::mat4& GetView() const { return m_view; }
 
-        inline void SetAspect(float aspect) { m_aspect = aspect; }
+        void SetAspect(float aspect)
+        {
+            m_aspect = aspect;
+            RecalculateProjection();
+        }
+        
         inline float GetAspect() const { return m_aspect; }
 
         void SetPosition(const glm::vec3& position)
@@ -69,6 +79,11 @@ namespace Acroy
                 m_position + forward,
                 worldUp
             );
+        }
+
+        void RecalculateProjection()
+        {
+            m_projection = glm::perspective(glm::radians(m_fov), m_aspect, m_zNear, m_zFar);
         }
     };
 }
