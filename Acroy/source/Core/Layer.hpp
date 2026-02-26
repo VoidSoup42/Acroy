@@ -13,5 +13,6 @@ namespace Acroy {
         virtual void OnDetach() {};
         virtual void OnUpdate(Timestep timestep) {};
         virtual void OnEvent(Event& event) {};
+        virtual void OnImGuiRender() {};
     };
 }

@@ -15,4 +15,5 @@ target_include_directories(Sandbox_Application PRIVATE
     ${CMAKE_SOURCE_DIR}/Acroy/vendor/spdlog/include
     ${CMAKE_SOURCE_DIR}/Acroy/vendor/glm
     ${CMAKE_SOURCE_DIR}/Acroy/vendor/entt
+    ${CMAKE_SOURCE_DIR}/Acroy/vendor/imgui
 )

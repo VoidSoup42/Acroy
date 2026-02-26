@@ -26,18 +26,4 @@ namespace Acroy {
             m_layerInsert--;
         }
     }
-
-    void LayerStack::PushOverlay(Layer* layer)
-    {
-        m_layers.emplace_back(layer);
-    }
-
-    void LayerStack::PopOverlay(Layer* layer)
-    {
-        auto it = std::find(m_layers.begin(), m_layers.end(), layer);
-
-        if (it != m_layers.end()) {
-            m_layers.erase(it);
-        }
-    }
 }

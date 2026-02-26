@@ -14,6 +14,16 @@ CameraController::CameraController(Acroy::Camera* camera, float moveSpeed, float
 void CameraController::SetActive(bool enabled)
 {
     m_active = enabled;
+
+    if (m_active)
+    {
+        Acroy::Input::SetMouseMode(Acroy::MouseMode::Disabled);
+        m_firstMouse = true;
+    }
+    else
+    {
+        Acroy::Input::SetMouseMode(Acroy::MouseMode::Normal);
+    }
 }
 
 bool CameraController::IsActive() const
@@ -30,17 +40,13 @@ void CameraController::SetPosition(const glm::vec3& pos)
 void CameraController::OnUpdate(Acroy::Timestep ts)
 {
     float dt = ts.GetSeconds();
-
-    if (m_active)
+    
+    if (!m_active)
     {
-        Acroy::Input::SetMouseMode(Acroy::MouseMode::Disabled);
-    }
-    else
-    {
-        Acroy::Input::SetMouseMode(Acroy::MouseMode::Normal);
         m_firstMouse = true;
         return;
     }
+
 
     glm::vec2 mousePos = Acroy::Input::GetMousePosition();
 

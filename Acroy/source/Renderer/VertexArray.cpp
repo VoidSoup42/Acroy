@@ -1,9 +1,11 @@
+#include "AcroyPCH.hpp"
+#include "VertexArray.hpp"
 #include "Renderer/Renderer.hpp"
 #include <glad/glad.h>
 
 namespace Acroy
 {
-    static GLenum ShaderDataTypeToGLType(ShaderDataType type)
+    static constexpr GLenum ShaderDataTypeToGLType(ShaderDataType type)
     {
         switch (type)
         {

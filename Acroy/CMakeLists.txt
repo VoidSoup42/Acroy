@@ -43,8 +43,20 @@ add_library(Acroy SHARED
     source/Renderer/Mesh.hpp
     source/Renderer/Mesh.cpp
 
+    source/ImGui/ImGuiLayer.hpp
+    source/ImGui/ImGuiLayer.cpp
+
     # Stb
     vendor/stb/stb_image.cpp
+
+    # ImGui
+    vendor/imgui/imgui.cpp
+    vendor/imgui/imgui_demo.cpp
+    vendor/imgui/imgui_draw.cpp
+    vendor/imgui/imgui_widgets.cpp
+    vendor/imgui/imgui_tables.cpp
+    vendor/imgui/backends/imgui_impl_glfw.cpp
+    vendor/imgui/backends/imgui_impl_opengl3.cpp
 )
 
 target_include_directories(Acroy PUBLIC
@@ -53,6 +65,7 @@ target_include_directories(Acroy PUBLIC
     ${CMAKE_SOURCE_DIR}/Acroy/vendor/glad/include
     ${CMAKE_SOURCE_DIR}/Acroy/vendor/stb
     ${CMAKE_SOURCE_DIR}/Acroy/vendor/entt
+    ${CMAKE_SOURCE_DIR}/Acroy/vendor/imgui
 )
 
 target_compile_definitions(Acroy PRIVATE

@@ -11,6 +11,7 @@ public:
     void OnAttach() override;
     void OnUpdate(Acroy::Timestep timestep) override;
     void OnEvent(Acroy::Event& event) override;
+    void OnImGuiRender() override;
 
 private:
     Level m_level;

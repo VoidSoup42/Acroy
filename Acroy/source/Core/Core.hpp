@@ -21,4 +21,6 @@ namespace Acroy
     {
         return std::make_shared<T>(std::forward<Args>(args)...);
     }
+
+    #define BIND_EVENT_FN(fn) std::bind(&fn, this, std::placeholders::_1)
 }
