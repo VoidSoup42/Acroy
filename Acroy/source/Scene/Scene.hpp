@@ -16,6 +16,8 @@ namespace Acroy
         Entity Create(const std::string& name = std::string());
         
         void OnUpdate(Timestep ts);
+
+        void OnWindowResize(float width, float height);
         
     private:
         entt::registry m_registry;

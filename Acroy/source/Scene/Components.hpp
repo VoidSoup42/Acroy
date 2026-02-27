@@ -1,6 +1,9 @@
+#pragma once
+
 #include "Renderer/Mesh.hpp"
 #include "Renderer/Shader.hpp"
 #include "Renderer/Texture.hpp"
+#include "Renderer/Camera.hpp"
 #include <glm/glm.hpp>
 
 namespace Acroy
@@ -51,5 +54,16 @@ namespace Acroy
 
         TextureComponent() = default;
         TextureComponent(const Ref<Texture> tex) : texture(tex) {}
+    };
+
+    struct CameraComponent
+    {
+        Ref<Camera> camera;
+        bool primary;
+
+        CameraComponent() = default;
+        CameraComponent(const Ref<Camera> cam, bool primary = true)
+        : camera(cam), primary(primary) {}
+
     };
 }

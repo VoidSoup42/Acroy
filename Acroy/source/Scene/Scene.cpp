@@ -22,9 +22,32 @@ namespace Acroy
 
     void Scene::OnUpdate(Timestep ts)
     {
+        Ref<Camera> cam;
+        glm::mat4* camTransform = nullptr;
+
+        auto camView = m_registry.view<TransformComponent, CameraComponent>();
+        for (auto entity : camView)
+        {
+            auto [transform, camera] = camView.get<TransformComponent, CameraComponent>(entity);
+
+            if (camera.primary)
+            {
+                cam = camera.camera;
+                camTransform = &transform.transform;
+                break;
+            }
+        }
+
+        if (!cam)
+        {
+            ACROY_CORE_INFO("No Primary Camera in Scene");
+            return;
+        }
+
+
         auto view = m_registry.group<TransformComponent, MeshComponent, ShaderComponent>();
 
-        Renderer::BeginScene(m_camera);
+        Renderer::BeginScene({ cam->GetProjection(), glm::inverse(*camTransform) });
 
         for (auto entity : view)
         {
@@ -40,5 +63,15 @@ namespace Acroy
         }
 
         Renderer::EndScene();
+    }
+
+    void Scene::OnWindowResize(float width, float height)
+    {
+		auto view = m_registry.view<CameraComponent>();
+		for (auto entity : view)
+		{
+			auto& cameraComponent = view.get<CameraComponent>(entity);
+            cameraComponent.camera->Resize(width, height);
+		}
     }
 }

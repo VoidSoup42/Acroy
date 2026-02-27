@@ -2,8 +2,6 @@ add_executable(Sandbox_Application
     source/Main.cpp
     source/SandboxLayer.hpp
     source/SandboxLayer.cpp
-    source/CameraController.hpp
-    source/CameraController.cpp
     source/Level.hpp
     source/Level.cpp
 )

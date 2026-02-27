@@ -2,12 +2,15 @@
 
 #include <Core/Timestep.hpp>
 #include <Scene/Scene.hpp>
+#include <Events/ApplicationEvent.hpp>
 
 class Level
 {
 public:
-    void Load(const Acroy::Ref<Acroy::Camera> cam);
+    void Load();
     void Update(Acroy::Timestep timestep);
+
+    void OnWindowResizeCallback(Acroy::WindowResizeEvent& e);
 
 private:
     Acroy::Ref<Acroy::Scene> m_scene;

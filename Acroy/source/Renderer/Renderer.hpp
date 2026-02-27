@@ -8,6 +8,12 @@
 
 namespace Acroy
 {
+    struct RenderCamera
+    {
+        glm::mat4 proj;
+        glm::mat4 view;
+    };
+
     class Renderer
     {
     public:
@@ -15,13 +21,14 @@ namespace Acroy
         static void SetViewport(float x, float y, float width, float height);
         static void SetClearColor(const glm::vec4& color);
         static void Clear();
-        static void BeginScene(const Ref<Camera> cam);
+
+        static void BeginScene(const RenderCamera& cam);
         static void EndScene();
 
         static void Submit(const Ref<VertexArray>& vertexArray, const Ref<Shader>& shader, const glm::mat4& transform);
         static void Submit(const Ref<Mesh>& mesh, const Ref<Shader>& shader, const glm::mat4& transform);
 
     private:
-        static Ref<Camera> s_camera;
+        static RenderCamera s_camera;
     };
 }

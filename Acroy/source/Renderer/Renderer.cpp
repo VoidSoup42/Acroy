@@ -3,7 +3,7 @@
 
 namespace Acroy
 {
-    Ref<Camera> Renderer::s_camera;
+    RenderCamera Renderer::s_camera;
 
     void Renderer::Init()
     {
@@ -12,7 +12,7 @@ namespace Acroy
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     }
 
-    void Renderer::BeginScene(const Ref<Camera> cam)
+    void Renderer::BeginScene(const RenderCamera& cam)
     {
         s_camera = cam;
     }
@@ -41,8 +41,8 @@ namespace Acroy
     {      
         shader->Bind();
         shader->SetUniformMat4("u_model", transform);
-        shader->SetUniformMat4("u_view", s_camera->GetView());
-        shader->SetUniformMat4("u_proj", s_camera->GetProjection());
+        shader->SetUniformMat4("u_view", s_camera.view);
+        shader->SetUniformMat4("u_proj", s_camera.proj);
 
         vertexArray->Bind();
         glDrawElements(GL_TRIANGLES, vertexArray->GetIndexBuffer()->GetIndicesCount(), GL_UNSIGNED_INT, nullptr);
@@ -52,8 +52,8 @@ namespace Acroy
     {
         shader->Bind();
         shader->SetUniformMat4("u_model", transform);
-        shader->SetUniformMat4("u_view", s_camera->GetView());
-        shader->SetUniformMat4("u_proj", s_camera->GetProjection());
+        shader->SetUniformMat4("u_view", s_camera.view);
+        shader->SetUniformMat4("u_proj", s_camera.proj);
 
         mesh->GetVertexArray()->Bind();
         glDrawElements(GL_TRIANGLES, mesh->GetIndicesCount(), GL_UNSIGNED_INT, nullptr);

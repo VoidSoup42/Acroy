@@ -3,8 +3,9 @@
 #include <Renderer/Texture.hpp>
 #include <Scene/Entity.hpp>
 #include <Scene/Components.hpp>
+#include <Renderer/PerspectiveCamera.hpp>
 
-void Level::Load(const Acroy::Ref<Acroy::Camera> cam)
+void Level::Load()
 {
     // ----------------------------------------
     // -------------- Ground ------------------
@@ -12,10 +13,10 @@ void Level::Load(const Acroy::Ref<Acroy::Camera> cam)
 
     float planeVertices[] = {
         // positions          // normals         // texcoords
-        -150.0f, 0.0f, -150.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f,
-         150.0f, 0.0f, -150.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,
-         150.0f, 0.0f,  150.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f,
-        -150.0f, 0.0f,  150.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f
+        -15.0f, 0.0f, -15.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f,
+         15.0f, 0.0f, -15.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,
+         15.0f, 0.0f,  15.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f,
+        -15.0f, 0.0f,  15.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f
     };
 
     uint32_t planeIndices[] = { 0, 1, 2, 2, 3, 0 };
@@ -120,14 +121,24 @@ void Level::Load(const Acroy::Ref<Acroy::Camera> cam)
     // -------------- Setup Scene -------------
     // ----------------------------------------
 
+
+    auto cam = Acroy::CreateRef<Acroy::PerspectiveCamera>(90.f, 16.0f/9.0f, 0.1f, 100.0f);
+
+
     m_scene = Acroy::CreateRef<Acroy::Scene>(cam);
+
+    Acroy::Entity cameraEntity = m_scene->Create("Camera");
+    cameraEntity.AddComponent<Acroy::CameraComponent>(cam);
+    Acroy::TransformComponent& camTransform = cameraEntity.GetComponent<Acroy::TransformComponent>();
+
+    camTransform.transform = glm::translate(camTransform.transform, glm::vec3(0.0, 1.0, 5.0));
 
     Acroy::Entity groundEntity = m_scene->Create("Ground");
     groundEntity.AddComponent<Acroy::MeshComponent>(groundMesh);
     groundEntity.AddComponent<Acroy::ShaderComponent>(shader);
 
     Acroy::TextureComponent& groundTextureComponent = groundEntity.AddComponent<Acroy::TextureComponent>(groundTexture);
-    groundTextureComponent.textureScale = 150.0f;
+    groundTextureComponent.textureScale = 15.0f;
 
     Acroy::Entity cubeEntity = m_scene->Create("Cube");
     cubeEntity.AddComponent<Acroy::MeshComponent>(cubeMesh);
@@ -144,4 +155,9 @@ void Level::Load(const Acroy::Ref<Acroy::Camera> cam)
 void Level::Update(Acroy::Timestep timestep)
 {
     m_scene->OnUpdate(timestep);
+}
+
+void Level::OnWindowResizeCallback(Acroy::WindowResizeEvent& e)
+{
+    m_scene->OnWindowResize(e.GetWidth(), e.GetHeight());
 }

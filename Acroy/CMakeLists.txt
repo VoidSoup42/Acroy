@@ -22,8 +22,9 @@ add_library(Acroy SHARED
     source/Scene/Entity.hpp
     source/Scene/Entity.cpp
 
+    source/Renderer/PerspectiveCamera.hpp
     source/Renderer/Camera.hpp
-    source/Renderer/Camera.cpp
+    # source/Renderer/Camera.cpp
 
     source/Renderer/Renderer.hpp
     source/Renderer/Renderer.cpp
