@@ -19,11 +19,13 @@ namespace Acroy {
         void OnEvent(Event& event);
 
         void PushLayer(Layer* layer);
+        void PushOverlay(Layer* overlay);
 
         inline static Application& GetApplicationInstance() { return *s_instance; }
         inline Window& GetWindow() const { return *m_window; }
 
         bool OnWindowResize(WindowResizeEvent& event);
+        bool OnWindowClose(WindowCloseEvent& event);
 
     private:
         LayerStack m_layerStack;

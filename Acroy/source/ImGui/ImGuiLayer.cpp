@@ -27,9 +27,24 @@ namespace Acroy
         ImGui_ImplOpenGL3_Init();
     }
 
+    void ImGuiLayer::OnEvent(Event& event)
+    {
+        ImGuiIO& io = ImGui::GetIO();
+
+        if (io.WantCaptureMouse)
+        {
+            event.handled |= event.IsInCategory(EventCategoryMouse);
+            event.handled |= event.IsInCategory(EventCategoryMouseButton);
+        }
+
+        if (io.WantCaptureKeyboard)
+        {
+            event.handled |= event.IsInCategory(EventCategoryKeyboard);
+        }
+    }
+
     void ImGuiLayer::OnDetach()
     {
-        ACROY_CORE_FATAL("ALFEIUhleiuawhfluaiewgflieawugfliuagruiaerhl");
         ImGui_ImplOpenGL3_Shutdown();
         ImGui_ImplGlfw_Shutdown();
         ImGui::DestroyContext();

@@ -16,7 +16,7 @@ namespace Acroy
         m_window = std::make_unique<Window>();
 
         m_imGuiLayer = new ImGuiLayer;
-        PushLayer(m_imGuiLayer);
+        PushOverlay(m_imGuiLayer);
 
         m_window->SetEventCallback(BIND_EVENT_FN(Application::OnEvent));
         m_window->SetVSync(false);
@@ -26,22 +26,22 @@ namespace Acroy
 
     void Application::OnEvent(Event& event)
     {
-        ImGuiIO& io = ImGui::GetIO();
-        event.handled |= event.IsInCategory(Acroy::EventCategory::EventCategoryMouseButton) & io.WantCaptureMouse;
-        event.handled |= event.IsInCategory(Acroy::EventCategory::EventCategoryKeyboard) & io.WantCaptureKeyboard;
-
-        if (event.GetEventType() == EventType::WindowClose)
-            m_running = false;
-
-		for (auto it = m_layerStack.begin(); it != m_layerStack.end(); ++it)
-		{
-			if (event.handled)
-				break;
-			(*it)->OnEvent(event);
-		}
-
         EventDispatcher dispatcher(event);
+        dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(Application::OnWindowClose));
         dispatcher.Dispatch<WindowResizeEvent>(BIND_EVENT_FN(Application::OnWindowResize));
+
+        for (auto it = m_layerStack.rbegin(); it != m_layerStack.rend(); ++it)
+        {
+            if (event.handled)
+                break;
+            (*it)->OnEvent(event);
+        }
+    }
+
+    bool Application::OnWindowClose(WindowCloseEvent& event)
+    {
+        m_running = false;
+        return true;
     }
 
     void Application::Run()
@@ -72,6 +72,12 @@ namespace Acroy
     {
         m_layerStack.PushLayer(layer);
         layer->OnAttach();
+    }
+
+    void Application::PushOverlay(Layer* overlay)
+    {
+        m_layerStack.PushOverlay(overlay);
+        overlay->OnAttach();
     }
 
     bool Application::OnWindowResize(WindowResizeEvent& event)

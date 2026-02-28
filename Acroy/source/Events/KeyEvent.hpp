@@ -19,8 +19,8 @@ namespace Acroy {
     {
     public:
         KeyPressedEvent(int keycode, uint32_t keyRepeat)
-        : m_keyRepeat(keyRepeat)
-        , KeyEvent(keycode) {}
+        : KeyEvent(keycode)
+        , m_keyRepeat(keyRepeat) {}
 
         inline uint32_t GetRepeatCount() const { return m_keyRepeat; }        
         inline std::string ToString() const override

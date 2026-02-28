@@ -8,7 +8,7 @@ namespace Acroy {
     {
     public:
         inline int GetButton() const { return m_button; }
-        EVENT_CLASS_CATEGORY(EventCategoryMouseButton | EventCategoryInput)
+        EVENT_CLASS_CATEGORY(EventCategoryMouseButton | EventCategoryMouse | EventCategoryInput)
 
     protected:
         MouseButtonEvent(int button) : m_button(button) {}
