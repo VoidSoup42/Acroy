@@ -2,7 +2,8 @@
 
 #include <Core/Layer.hpp>
 #include <Renderer/Camera.hpp>
-#include "Level.hpp"
+#include <Core/Core.hpp>
+#include "CameraController.hpp"
 
 class SandboxLayer : public Acroy::Layer
 {
@@ -13,5 +14,6 @@ public:
     void OnImGuiRender() override;
 
 private:
-    Level m_level;
+    Acroy::Ref<Acroy::Scene> m_scene;
+    Acroy::Scope<CameraController> m_cameraController;
 };

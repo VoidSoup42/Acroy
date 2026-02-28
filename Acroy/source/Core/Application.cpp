@@ -3,6 +3,7 @@
 #include "Timestep.hpp"
 #include "Log.hpp"
 #include "Renderer/Renderer.hpp"
+#include <imgui.h>
 
 namespace Acroy
 {
@@ -13,17 +14,22 @@ namespace Acroy
         s_instance = this;
         
         m_window = std::make_unique<Window>();
+
+        m_imGuiLayer = new ImGuiLayer;
+        PushLayer(m_imGuiLayer);
+
         m_window->SetEventCallback(BIND_EVENT_FN(Application::OnEvent));
         m_window->SetVSync(false);
 
         Renderer::Init();
-
-        m_imGuiLayer = new ImGuiLayer;
-        PushLayer(m_imGuiLayer);
     }
 
     void Application::OnEvent(Event& event)
     {
+        ImGuiIO& io = ImGui::GetIO();
+        event.handled |= event.IsInCategory(Acroy::EventCategory::EventCategoryMouseButton) & io.WantCaptureMouse;
+        event.handled |= event.IsInCategory(Acroy::EventCategory::EventCategoryKeyboard) & io.WantCaptureKeyboard;
+
         if (event.GetEventType() == EventType::WindowClose)
             m_running = false;
 
@@ -50,7 +56,6 @@ namespace Acroy
             {
                 layer->OnUpdate(ts);
             }
-
 
             m_imGuiLayer->Begin();
             for (Layer* layer : m_layerStack)
